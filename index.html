@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Capio — Your Planner, Now Intelligent</title>
+  <meta name="description" content="Capio reads your handwriting, recognizes dates and times, sets reminders, and organizes your day automatically. Join the waitlist for early access. Limited beta spots.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── RESET ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    img { display: block; max-width: 100%; }
+    input, button { font: inherit; border: none; outline: none; }
+
+    /* ── DESIGN SYSTEM ── */
+    :root {
+      --bg-primary: #F5F0E8;
+      --bg-secondary: #EDE8DC;
+      --bg-dark: #1A1A1A;
+      --text-primary: #1A1A1A;
+      --text-secondary: #6B6560;
+      --text-muted: #9C9690;
+      --text-on-dark: #F5F0E8;
+      --border: #D4CFC6;
+      --border-light: #E8E3DA;
+
+      --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+
+      --text-hero: clamp(3.5rem, 7vw, 6.5rem);
+      --text-h2: clamp(2rem, 4vw, 3.25rem);
+      --text-h3: clamp(1.25rem, 2vw, 1.5rem);
+      --text-body: clamp(1rem, 1.5vw, 1.125rem);
+      --text-label: 0.75rem;
+      --text-small: 0.875rem;
+
+      --max-width: 1440px;
+      --section-padding: clamp(4rem, 8vw, 7rem) 0;
+      --content-padding: 0 clamp(1.5rem, 4vw, 3rem);
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ── UTILITY ── */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: var(--content-padding);
+    }
+
+    .section-label {
+      font-family: var(--font-body);
+      font-size: var(--text-label);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border-light);
+      margin: 0;
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-in {
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      height: 80px;
+      padding-top: 1.5rem;
+      padding-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 clamp(1.5rem, 4vw, 3rem);
+    }
+    .nav-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(245, 240, 232, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: border-color 0.3s ease;
+      border-bottom: 1px solid transparent;
+    }
+    .nav-wrap.scrolled {
+      border-bottom-color: var(--border-light);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+    .nav-logo img {
+      height: 44px;
+      width: auto;
+      object-fit: contain;
+    }
+    .nav-cta {
+      font-family: var(--font-body);
+      font-size: var(--text-small);
+      font-weight: 500;
+      padding: 0.5rem 1.25rem;
+      border: 1px solid var(--text-primary);
+      border-radius: 4px;
+      background: transparent;
+      color: var(--text-primary);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .nav-cta:hover {
+      background: var(--text-primary);
+      color: var(--text-on-dark);
+    }
+
+    /* ── SECTION 1: HERO ── */
+    .hero {
+      padding: clamp(3rem, 6vw, 5rem) 0 clamp(2rem, 4vw, 3rem);
+    }
+    .hero .section-label {
+      opacity: 0;
+      animation: labelFade 0.4s ease 0.2s forwards;
+    }
+    @keyframes labelFade {
+      to { opacity: 1; }
+    }
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: var(--text-hero);
+      line-height: 1.08;
+      margin-bottom: 1rem;
+      opacity: 0;
+      transform: translateY(32px);
+      animation: headlineUp 0.6s ease 0.4s forwards;
+    }
+    .hero-sub {
+      font-size: var(--text-h2);
+      font-weight: 500;
+      color: var(--text-secondary);
+      line-height: 1.3;
+      margin-bottom: clamp(2rem, 4vw, 3.5rem);
+      opacity: 0;
+      transform: translateY(24px);
+      animation: headlineUp 0.6s ease 0.5s forwards;
+    }
+    @keyframes headlineUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-video {
+      position: relative;
+      width: 100%;
+      opacity: 0;
+      animation: videoFade 0.8s ease 0.8s forwards;
+    }
+    .ipad-frame {
+      position: relative;
+      background: #1A1A1A;
+      border-radius: 24px;
+      padding: 20px;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(255,255,255,0.08);
+    }
+    .ipad-frame::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: -1px;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 40px;
+      background: #2a2a2a;
+      border-radius: 0 2px 2px 0;
+    }
+    .ipad-screen {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #000;
+    }
+    @keyframes videoFade {
+      to { opacity: 1; }
+    }
+    .hero-video video {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .hero-video .play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 72px;
+      height: 72px;
+      background: var(--text-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+    }
+    .hero-video:hover .play-btn {
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+    .play-btn svg {
+      width: 24px;
+      height: 24px;
+      margin-left: 3px;
+    }
+
+    /* ── SECTION 2: VALUE PROP + CTA ── */
+    .value-prop {
+      padding: clamp(1.5rem, 3vw, 2.5rem) 0 clamp(3rem, 6vw, 5rem);
+    }
+    .value-prop-grid {
+      display: grid;
+      grid-template-columns: 55% 45%;
+      gap: 2rem;
+      align-items: start;
+    }
+    .value-prop-desc {
+      font-size: var(--text-body);
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    .value-prop-right {}
+    .value-prop-tagline {
+      font-size: var(--text-h3);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+    }
+    .value-prop-note {
+      font-size: var(--text-h3);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-top: 1rem;
+    }
+    .email-form {
+      display: flex;
+      gap: 0;
+    }
+    .email-form input {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--text-primary);
+      border-right: none;
+      border-radius: 4px 0 0 4px;
+      background: var(--bg-primary);
+      font-size: var(--text-small);
+      color: var(--text-primary);
+    }
+    .email-form input::placeholder {
+      color: var(--text-muted);
+    }
+    .email-form button {
+      padding: 0.75rem 1.5rem;
+      background: var(--text-primary);
+      color: var(--text-on-dark);
+      border-radius: 0 4px 4px 0;
+      font-size: var(--text-small);
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.2s ease;
+    }
+    .email-form button:hover {
+      opacity: 0.85;
+    }
+
+    /* ── SECTION 3: THE PROBLEM ── */
+    .problem {
+      padding: var(--section-padding);
+    }
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 40% 60%;
+      gap: clamp(2rem, 4vw, 4rem);
+      align-items: start;
+    }
+    .problem-heading {
+      font-family: var(--font-display);
+      font-size: var(--text-h2);
+      line-height: 1.15;
+    }
+    .problem-details {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+    .problem-item {}
+    .problem-item-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .problem-item-marker {
+      width: 10px;
+      height: 10px;
+      border: 1.5px solid var(--text-primary);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .problem-item-name {
+      font-size: var(--text-label);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+    .problem-item-desc {
+      font-size: var(--text-body);
+      color: var(--text-secondary);
+      line-height: 1.7;
+      padding-left: calc(10px + 0.75rem);
+    }
+    .problem-closing {
+      font-size: var(--text-h3);
+      font-weight: 700;
+      margin-top: 1rem;
+      line-height: 1.4;
+    }
+
+    /* ── SECTION 4: THE SOLUTION ── */
+    .solution {
+      background: var(--bg-dark);
+      color: var(--text-on-dark);
+      padding: var(--section-padding);
+    }
+    .solution .section-label {
+      color: rgba(245, 240, 232, 0.4);
+    }
+    .solution-headline {
+      font-family: var(--font-display);
+      font-size: var(--text-hero);
+      line-height: 1.12;
+      margin-bottom: clamp(2rem, 4vw, 3rem);
+    }
+    .solution-negatives {
+      display: flex;
+      gap: clamp(2rem, 4vw, 4rem);
+      margin-bottom: clamp(2rem, 4vw, 3rem);
+    }
+    .solution-negatives span {
+      font-size: var(--text-h3);
+      font-weight: 500;
+    }
+    .solution-closing {
+      font-size: var(--text-body);
+      color: rgba(245, 240, 232, 0.7);
+      line-height: 1.7;
+    }
+    .solution-closing strong {
+      display: block;
+      margin-top: 0.25rem;
+      color: var(--text-on-dark);
+      font-weight: 500;
+    }
+
+    /* ── SECTION 5: DEMO 1 ── */
+    .demo {
+      padding: var(--section-padding);
+    }
+    .demo-headline {
+      font-family: var(--font-display);
+      font-size: var(--text-h2);
+      line-height: 1.15;
+      margin-bottom: clamp(2rem, 4vw, 3rem);
+    }
+    .demo-media {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: var(--bg-dark);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+      cursor: pointer;
+    }
+    .demo-media .play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 64px;
+      height: 64px;
+      background: var(--text-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+    }
+    .demo-media:hover .play-btn {
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+    .demo-media .play-btn svg {
+      width: 20px;
+      height: 20px;
+      margin-left: 2px;
+    }
+    .demo-caption {
+      font-size: var(--text-h3);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+    .demo-caption-bold {
+      font-weight: 700;
+    }
+
+    /* ── SECTION 7: FEATURES ── */
+    .features {
+      padding: var(--section-padding);
+    }
+    .features-layout {
+      display: grid;
+      grid-template-columns: 40% 55%;
+      gap: clamp(2rem, 4vw, 5%);
+      align-items: start;
+    }
+    .features-left {
+      position: relative;
+    }
+    .features-heading {
+      font-family: var(--font-display);
+      font-size: var(--text-h2);
+      line-height: 1.15;
+      margin-bottom: clamp(2rem, 4vw, 3rem);
+    }
+    .features-sticky {
+      position: sticky;
+      top: 100px;
+    }
+    .features-ipad {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: var(--bg-dark);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .features-ipad .play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 56px;
+      height: 56px;
+      background: rgba(245, 240, 232, 0.15);
+      border: 1px solid rgba(245, 240, 232, 0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .features-ipad .play-btn svg {
+      width: 18px;
+      height: 18px;
+      margin-left: 2px;
+    }
+    .features-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .feature-item {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .feature-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .feature-item-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .feature-item-marker {
+      width: 10px;
+      height: 10px;
+      border: 1.5px solid var(--text-primary);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .feature-item-name {
+      font-size: var(--text-label);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+    .feature-item-desc {
+      font-size: var(--text-body);
+      color: var(--text-secondary);
+      line-height: 1.6;
+      padding-left: calc(10px + 0.75rem);
+    }
+    .features-footnote {
+      font-size: var(--text-small);
+      color: var(--text-muted);
+      margin-top: 2rem;
+    }
+
+    /* ── SECTION 8: VIEWS ── */
+    .views {
+      background: var(--bg-secondary);
+      padding: var(--section-padding);
+    }
+    .views-heading {
+      font-family: var(--font-display);
+      font-size: var(--text-h2);
+      line-height: 1.15;
+      margin-bottom: clamp(2rem, 4vw, 3.5rem);
+    }
+    .views-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: clamp(0.75rem, 1.5vw, 1.5rem);
+      margin-bottom: clamp(2rem, 4vw, 3rem);
+    }
+    .view-card {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .view-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .view-card-thumb {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      background: var(--bg-dark);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+      transition: transform 0.2s ease;
+    }
+    .view-card:hover .view-card-thumb {
+      transform: scale(1.02);
+    }
+    .view-card-thumb .play-btn-sm {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 36px;
+      height: 36px;
+      background: rgba(245, 240, 232, 0.15);
+      border: 1px solid rgba(245, 240, 232, 0.25);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .view-card-thumb .play-btn-sm svg {
+      width: 12px;
+      height: 12px;
+      margin-left: 1px;
+    }
+    .view-card-label {
+      font-size: var(--text-small);
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+    .views-closing {
+      font-size: var(--text-body);
+      font-weight: 500;
+    }
+
+    /* ── SECTION 9: COMPARISON ── */
+    .comparison {
+      padding: var(--section-padding);
+    }
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 35% 65%;
+      gap: clamp(2rem, 4vw, 4rem);
+      align-items: start;
+    }
+    .comparison-heading {
+      font-family: var(--font-display);
+      font-size: var(--text-h2);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+    .comparison-closing {
+      font-size: var(--text-h3);
+      font-weight: 700;
+      line-height: 1.4;
+    }
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--text-small);
+    }
+    .comparison-table thead th {
+      text-align: left;
+      font-size: var(--text-label);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0 0.75rem 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .comparison-table thead th:first-child {
+      padding-left: 0;
+    }
+    .comparison-table tbody td {
+      padding: 0.7rem 0.75rem;
+      border-bottom: 1px solid var(--border-light);
+      vertical-align: middle;
+    }
+    .comparison-table tbody td:first-child {
+      padding-left: 0;
+      color: var(--text-secondary);
+    }
+    .comparison-table .check {
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .comparison-table .cross {
+      color: var(--border);
+    }
+    .comparison-table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* ── SECTION 10: PRICING ── */
+    .pricing {
+      background: var(--bg-secondary);
+      padding: var(--section-padding);
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 40% 60%;
+      gap: clamp(2rem, 4vw, 4rem);
+      align-items: start;
+      margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
+    }
+    .pricing-heading {
+      font-family: var(--font-display);
+      font-size: var(--text-h2);
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .pricing-sub {
+      font-size: var(--text-body);
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .pricing-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    .pricing-card {
+      border: 1px solid var(--text-primary);
+      border-radius: 4px;
+      padding: clamp(1.5rem, 3vw, 2rem);
+      position: relative;
+    }
+    .pricing-card-badge {
+      position: absolute;
+      top: -1px;
+      left: 1.5rem;
+      background: var(--text-primary);
+      color: var(--text-on-dark);
+      font-size: 0.625rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      padding: 0.25rem 0.625rem;
+      border-radius: 0 0 4px 4px;
+    }
+    .pricing-card-amount {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3vw, 2.25rem);
+      margin-bottom: 0.25rem;
+    }
+    .pricing-card-period {
+      font-size: var(--text-small);
+      color: var(--text-secondary);
+    }
+    .pricing-card-save {
+      font-size: var(--text-small);
+      font-weight: 700;
+      margin-top: 0.75rem;
+    }
+    .pricing-form-wrap {
+      max-width: 480px;
+    }
+    .pricing-form-wrap .email-form input {
+      background: var(--bg-secondary);
+    }
+    .pricing-note {
+      font-size: var(--text-small);
+      color: var(--text-muted);
+      margin-top: 0.75rem;
+    }
+
+    /* ── SECTION 11: PRIVACY ── */
+    .privacy {
+      background: var(--bg-dark);
+      color: var(--text-on-dark);
+      padding: var(--section-padding);
+    }
+    .privacy .section-label {
+      color: rgba(245, 240, 232, 0.4);
+    }
+    .privacy-grid {
+      display: grid;
+      grid-template-columns: 40% 60%;
+      gap: clamp(2rem, 4vw, 4rem);
+      align-items: start;
+      margin-bottom: clamp(2rem, 4vw, 3rem);
+    }
+    .privacy-heading {
+      font-family: var(--font-display);
+      font-size: var(--text-h2);
+      line-height: 1.15;
+    }
+    .privacy-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .privacy-list span {
+      font-size: var(--text-h3);
+      font-weight: 500;
+    }
+    .privacy-closing {
+      font-size: var(--text-body);
+      color: rgba(245, 240, 232, 0.7);
+      line-height: 1.7;
+    }
+
+    /* ── SECTION 12: THE CLOSE ── */
+    .close-section {
+      padding: var(--section-padding);
+    }
+    .close-headline {
+      font-family: var(--font-display);
+      font-size: var(--text-hero);
+      line-height: 1.08;
+      margin-bottom: clamp(2rem, 4vw, 3rem);
+    }
+    .close-body p {
+      font-size: var(--text-body);
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: 0.25rem;
+    }
+    .close-body .close-emphasis {
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+    .close-body .close-break {
+      margin-top: 1.5rem;
+    }
+    .close-fix {
+      font-size: var(--text-body);
+      margin-top: 1.5rem;
+      margin-bottom: 0.25rem;
+    }
+    .close-tagline {
+      font-family: var(--font-display);
+      font-size: var(--text-h2);
+      line-height: 1.15;
+      margin-top: clamp(2rem, 4vw, 3rem);
+      margin-bottom: clamp(2rem, 3vw, 2.5rem);
+    }
+    .close-form-wrap {
+      max-width: 480px;
+      margin-bottom: 2rem;
+    }
+    .close-sign-off {
+      font-size: var(--text-label);
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: var(--text-muted);
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--bg-dark);
+      color: var(--text-on-dark);
+      padding: clamp(3rem, 6vw, 5rem) 0;
+    }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+      text-decoration: none;
+      color: var(--text-on-dark);
+    }
+    .footer-logo img {
+      height: 72px;
+      width: auto;
+      object-fit: contain;
+      filter: invert(1) sepia(0.15) saturate(0.5) hue-rotate(5deg) brightness(1.1);
+    }
+    .footer .section-label {
+      color: rgba(245, 240, 232, 0.4);
+      margin-bottom: 1rem;
+    }
+    .footer-about {
+      font-size: var(--text-body);
+      color: rgba(245, 240, 232, 0.8);
+      line-height: 1.7;
+      max-width: 480px;
+      margin-bottom: 2rem;
+    }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .footer-links a {
+      font-size: var(--text-small);
+      color: rgba(245, 240, 232, 0.7);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .footer-links a:hover {
+      color: var(--text-on-dark);
+      text-decoration: underline;
+    }
+    .footer-links .footer-dot {
+      color: rgba(245, 240, 232, 0.3);
+    }
+    .footer-copy {
+      font-size: var(--text-small);
+      color: rgba(245, 240, 232, 0.4);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1199px) {
+      .value-prop-grid { grid-template-columns: 50% 50%; }
+      .problem-grid { grid-template-columns: 50% 50%; }
+      .features-layout { grid-template-columns: 45% 50%; }
+      .comparison-grid { grid-template-columns: 40% 60%; }
+      .pricing-grid { grid-template-columns: 45% 55%; }
+      .privacy-grid { grid-template-columns: 45% 55%; }
+    }
+
+    @media (max-width: 767px) {
+      .value-prop-grid {
+        grid-template-columns: 1fr;
+      }
+      .problem-grid {
+        grid-template-columns: 1fr;
+      }
+      .solution-negatives {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      .features-layout {
+        grid-template-columns: 1fr;
+      }
+      .features-sticky {
+        position: static;
+      }
+      .views-grid {
+        grid-template-columns: repeat(3, 1fr);
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+      }
+      .view-card {
+        scroll-snap-align: start;
+      }
+      .comparison-grid {
+        grid-template-columns: 1fr;
+      }
+      .comparison-table-wrap {
+        margin: 0 calc(-1 * clamp(1.5rem, 5vw, 4rem));
+        padding: 0 clamp(1.5rem, 5vw, 4rem);
+      }
+      .comparison-table {
+        min-width: 480px;
+      }
+      .comparison-table tbody td:first-child {
+        position: sticky;
+        left: 0;
+        background: var(--bg-primary);
+      }
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+      .pricing-cards {
+        grid-template-columns: 1fr;
+      }
+      .pricing-card-annual {
+        order: -1;
+      }
+      .privacy-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <div class="nav-wrap" id="nav">
+    <nav class="nav">
+      <a href="#" class="nav-logo">
+        <img src="capio-logo-3.png" alt="Capio">
+      </a>
+      <a href="#notify" class="nav-cta">Join the Waitlist</a>
+    </nav>
+  </div>
+
+  <!-- ── SECTION 1: HERO ── -->
+  <section class="hero">
+    <div class="container">
+      <p class="section-label">Introducing Capio</p>
+      <h1 class="hero-headline">Stop rewriting<br>your planner.</h1>
+      <p class="hero-sub">Write it once. It's handled.</p>
+      <div class="hero-video">
+        <div class="ipad-frame">
+          <div class="ipad-screen">
+            <video autoplay muted loop playsinline>
+              <source src="Capio-onboard-magic.mov" type="video/quicktime">
+              <source src="Capio-onboard-magic.mov" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 2: VALUE PROP + CTA ── -->
+  <section class="value-prop">
+    <div class="container">
+      <div class="value-prop-grid">
+        <p class="value-prop-desc">
+          Write everything once across days, weeks, and months.<br>Capio turns it into a fully organized plan with reminders set instantly.
+        </p>
+        <div class="value-prop-right">
+          <form class="email-form" id="notify">
+            <input type="email" placeholder="your@email.com" required>
+            <button type="submit">Join Waitlist</button>
+          </form>
+          <p class="value-prop-note">Join the waitlist for early access. Limited beta spots.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ── SECTION 3: THE PROBLEM ── -->
+  <section class="problem">
+    <div class="container">
+      <p class="section-label fade-up">The Problem</p>
+      <div class="problem-grid">
+        <h2 class="problem-heading fade-up">Planning shouldn't<br>be this much work.</h2>
+        <div class="problem-details">
+          <div class="problem-item fade-up">
+            <div class="problem-item-header">
+              <div class="problem-item-marker"></div>
+              <span class="problem-item-name">Paper Planners</span>
+            </div>
+            <p class="problem-item-desc">
+              You write a task. Then you rewrite it tomorrow. Then again next week. You flip pages. You miss things. No reminders.
+            </p>
+          </div>
+          <div class="problem-item fade-up">
+            <div class="problem-item-header">
+              <div class="problem-item-marker"></div>
+              <span class="problem-item-name">Digital Planners</span>
+            </div>
+            <p class="problem-item-desc">
+              Five taps to create one meeting. No free writing. No flexibility. No flow. One note turns into five steps.
+            </p>
+          </div>
+        </div>
+      </div>
+      <p class="problem-closing fade-up">This isn't a discipline problem. It's a tool problem.</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ── SECTION 4: THE SOLUTION ── -->
+  <section class="solution">
+    <div class="container">
+      <p class="section-label">The Solution</p>
+      <h2 class="solution-headline">Think once.<br>Write once.<br>Done.</h2>
+      <div class="solution-negatives">
+        <span>No sorting.</span>
+        <span>No rewriting.</span>
+        <span>No second pass.</span>
+      </div>
+      <p class="solution-closing">
+        You don't have to organize your planner anymore.
+        <strong>You just use it.</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- ── SECTION 5: DEMO 1 — HOW IT WORKS ── -->
+  <section class="demo">
+    <div class="container">
+      <p class="section-label fade-up">How It Works</p>
+      <h2 class="demo-headline fade-up">Write it.<br>Watch it land.</h2>
+      <div class="demo-media fade-in" role="img" aria-label="Demo: single task routing GIF placeholder">
+        <div class="play-btn">
+          <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
+        </div>
+      </div>
+      <p class="demo-caption fade-up">Dates just land. Times just show up.<br>Reminders — already set.</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ── SECTION 6: DEMO 2 ── -->
+  <section class="demo">
+    <div class="container">
+      <h2 class="demo-headline fade-up">One brain dump.<br>Your entire week — organized.</h2>
+      <div class="demo-media fade-in" role="img" aria-label="Demo: brain dump routing GIF placeholder">
+        <div class="play-btn">
+          <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
+        </div>
+      </div>
+      <p class="demo-caption fade-up demo-caption-bold">You wrote it once. Capio handled the rest.</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ── SECTION 7: FEATURES ── -->
+  <section class="features">
+    <div class="container">
+      <p class="section-label fade-up">Features</p>
+      <div class="features-layout">
+        <div class="features-left">
+          <h2 class="features-heading fade-up">Everything you need.<br>Nothing you don't.</h2>
+          <div class="features-sticky">
+            <div class="features-ipad fade-in" role="img" aria-label="iPad Daily View screenshot placeholder">
+              <div class="play-btn">
+                <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="features-list">
+          <div class="feature-item">
+            <div class="feature-item-header">
+              <div class="feature-item-marker"></div>
+              <span class="feature-item-name">Focus 3</span>
+            </div>
+            <p class="feature-item-desc">Three priorities. Every morning. Circle any task to promote it.</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-item-header">
+              <div class="feature-item-marker"></div>
+              <span class="feature-item-name">Action List</span>
+            </div>
+            <p class="feature-item-desc">Everything else lives here. Write tasks freely. They move at your speed.</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-item-header">
+              <div class="feature-item-marker"></div>
+              <span class="feature-item-name">Time Block</span>
+            </div>
+            <p class="feature-item-desc">Write a time. It lands. Reminder set.</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-item-header">
+              <div class="feature-item-marker"></div>
+              <span class="feature-item-name">Gestures</span>
+            </div>
+            <p class="feature-item-desc">Checkmark — done. Chevron — moved. Circle — promoted. No menus.</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-item-header">
+              <div class="feature-item-marker"></div>
+              <span class="feature-item-name">Auto-Rollover</span>
+            </div>
+            <p class="feature-item-desc">Didn't finish? Already waiting tomorrow. Never rewrite again.</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-item-header">
+              <div class="feature-item-marker"></div>
+              <span class="feature-item-name">Sprint Goals</span>
+            </div>
+            <p class="feature-item-desc">Set. Break down. Track.</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-item-header">
+              <div class="feature-item-marker"></div>
+              <span class="feature-item-name">Brain Dump</span>
+            </div>
+            <p class="feature-item-desc">Dump everything. Capio routes it all. The mess becomes the plan.</p>
+          </div>
+        </div>
+      </div>
+      <p class="features-footnote fade-up">Plus search, freehand notes, and drawing — built in.</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ── SECTION 8: VIEWS ── -->
+  <section class="views">
+    <div class="container">
+      <p class="section-label fade-up">Your Planner</p>
+      <h2 class="views-heading fade-up">One planner. Six views.<br>Your entire year.</h2>
+      <div class="views-grid">
+        <div class="view-card">
+          <div class="view-card-thumb">
+            <div class="play-btn-sm">
+              <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
+            </div>
+          </div>
+          <span class="view-card-label">Daily</span>
+        </div>
+        <div class="view-card">
+          <div class="view-card-thumb">
+            <div class="play-btn-sm">
+              <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
+            </div>
+          </div>
+          <span class="view-card-label">Weekly</span>
+        </div>
+        <div class="view-card">
+          <div class="view-card-thumb">
+            <div class="play-btn-sm">
+              <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
+            </div>
+          </div>
+          <span class="view-card-label">Monthly</span>
+        </div>
+        <div class="view-card">
+          <div class="view-card-thumb">
+            <div class="play-btn-sm">
+              <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
+            </div>
+          </div>
+          <span class="view-card-label">Yearly</span>
+        </div>
+        <div class="view-card">
+          <div class="view-card-thumb">
+            <div class="play-btn-sm">
+              <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
+            </div>
+          </div>
+          <span class="view-card-label">Capture</span>
+        </div>
+        <div class="view-card">
+          <div class="view-card-thumb">
+            <div class="play-btn-sm">
+              <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
+            </div>
+          </div>
+          <span class="view-card-label">Notes</span>
+        </div>
+      </div>
+      <p class="views-closing fade-up">Every view syncs. Write once, see everywhere.</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ── SECTION 9: COMPARISON ── -->
+  <section class="comparison">
+    <div class="container">
+      <p class="section-label fade-up">Why Capio</p>
+      <div class="comparison-grid">
+        <div>
+          <h2 class="comparison-heading fade-up">What makes Capio<br>different.</h2>
+          <p class="comparison-closing fade-up">Simple like paper.<br>Powerful like software.<br>Nothing else does both.</p>
+        </div>
+        <div class="comparison-table-wrap">
+          <table class="comparison-table fade-up">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Paper</th>
+                <th>Digital</th>
+                <th>Notes</th>
+                <th>Capio</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Write freely</td>
+                <td class="check">&#10003;</td>
+                <td class="cross">&#10005;</td>
+                <td class="check">&#10003;</td>
+                <td class="check">&#10003;</td>
+              </tr>
+              <tr>
+                <td>Understands writing</td>
+                <td class="cross">&#10005;</td>
+                <td class="cross">&#10005;</td>
+                <td class="cross">&#10005;</td>
+                <td class="check">&#10003;</td>
+              </tr>
+              <tr>
+                <td>Auto-routes tasks</td>
+                <td class="cross">&#10005;</td>
+                <td class="cross">&#10005;</td>
+                <td class="cross">&#10005;</td>
+                <td class="check">&#10003;</td>
+              </tr>
+              <tr>
+                <td>Reminders</td>
+                <td class="cross">&#10005;</td>
+                <td class="cross">&#10005;</td>
+                <td class="cross">&#10005;</td>
+                <td class="check">&#10003;</td>
+              </tr>
+              <tr>
+                <td>Rollover</td>
+                <td class="cross">&#10005;</td>
+                <td class="cross">&#10005;</td>
+                <td class="cross">&#10005;</td>
+                <td class="check">&#10003;</td>
+              </tr>
+              <tr>
+                <td>Brain dump</td>
+                <td class="cross">&#10005;</td>
+                <td class="cross">&#10005;</td>
+                <td class="cross">&#10005;</td>
+                <td class="check">&#10003;</td>
+              </tr>
+              <tr>
+                <td>Gestures</td>
+                <td class="cross">&#10005;</td>
+                <td class="cross">&#10005;</td>
+                <td class="cross">&#10005;</td>
+                <td class="check">&#10003;</td>
+              </tr>
+              <tr>
+                <td>No account</td>
+                <td class="check">&#10003;</td>
+                <td class="cross">&#10005;</td>
+                <td class="cross">&#10005;</td>
+                <td class="check">&#10003;</td>
+              </tr>
+              <tr>
+                <td>No tracking</td>
+                <td class="check">&#10003;</td>
+                <td class="cross">&#10005;</td>
+                <td class="cross">&#10005;</td>
+                <td class="check">&#10003;</td>
+              </tr>
+              <tr>
+                <td>iPad + iPhone</td>
+                <td class="cross">&#10005;</td>
+                <td class="check">&#10003;</td>
+                <td class="check">&#10003;</td>
+                <td class="check">&#10003;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ── SECTION 10: PRICING ── -->
+  <section class="pricing">
+    <div class="container">
+      <p class="section-label fade-up">Pricing</p>
+      <div class="pricing-grid">
+        <div>
+          <h2 class="pricing-heading fade-up">Start your 7-day<br>free trial.</h2>
+          <p class="pricing-sub fade-up">Try everything. Full access.<br>No credit card required.</p>
+        </div>
+        <div class="pricing-cards fade-up">
+          <div class="pricing-card">
+            <p class="pricing-card-amount">$14.99</p>
+            <p class="pricing-card-period">/month</p>
+          </div>
+          <div class="pricing-card pricing-card-annual">
+            <div class="pricing-card-badge">Best Value</div>
+            <p class="pricing-card-amount">$119.99</p>
+            <p class="pricing-card-period">/year</p>
+            <p class="pricing-card-save">Save 4 months</p>
+          </div>
+        </div>
+      </div>
+      <div class="pricing-form-wrap">
+        <form class="email-form">
+          <input type="email" placeholder="your@email.com" required>
+          <button type="submit">Join Waitlist</button>
+        </form>
+        <p class="pricing-note">Launching August 2026. Sign up to be first.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 11: PRIVACY ── -->
+  <section class="privacy">
+    <div class="container">
+      <p class="section-label">Privacy</p>
+      <div class="privacy-grid">
+        <h2 class="privacy-heading">Your data stays on<br>your devices. Period.</h2>
+        <div class="privacy-list">
+          <span>No cloud servers.</span>
+          <span>No tracking.</span>
+          <span>No ads.</span>
+          <span>No account required.</span>
+        </div>
+      </div>
+      <p class="privacy-closing">Built for professionals who take their privacy as seriously as their planning.</p>
+    </div>
+  </section>
+
+  <!-- ── SECTION 12: THE CLOSE ── -->
+  <section class="close-section">
+    <div class="container">
+      <h2 class="close-headline fade-up">Stop organizing<br>your life.</h2>
+      <div class="close-body fade-up">
+        <p>You've rewritten tasks.</p>
+        <p>You've rebuilt your plans.</p>
+        <p>You've lost things.</p>
+        <p class="close-break close-emphasis">Not because you're disorganized.</p>
+        <p class="close-emphasis">Because your tools are.</p>
+      </div>
+      <p class="close-fix fade-up">Capio fixes that.</p>
+      <p class="close-fix fade-up">You write once. It's handled.</p>
+      <h3 class="close-tagline fade-up">Your planner.<br>Now intelligent.</h3>
+      <div class="close-form-wrap">
+        <form class="email-form">
+          <input type="email" placeholder="your@email.com" required>
+          <button type="submit">Join Waitlist</button>
+        </form>
+      </div>
+      <p class="close-sign-off fade-up">Write. Set. Go.</p>
+    </div>
+  </section>
+
+  <!-- ── SECTION 13: FOOTER ── -->
+  <footer class="footer">
+    <div class="container">
+      <a href="#" class="footer-logo">
+        <img src="capio-logo-3.png" alt="Capio">
+      </a>
+      <p class="section-label">About</p>
+      <p class="footer-about">Designed and built by Vee — a product designer who got tired of choosing between simple and smart.</p>
+      <div class="footer-links">
+        <a href="#">@capioplan</a>
+        <span class="footer-dot">&middot;</span>
+        <a href="mailto:hello@capioplan.com">hello@capioplan.com</a>
+      </div>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <span class="footer-dot">&middot;</span>
+        <a href="#">Terms of Service</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Capio</p>
+    </div>
+  </footer>
+
+  <!-- ── JS ── -->
+  <script>
+    // Nav scroll border
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 8);
+    }, { passive: true });
+
+    // Intersection Observer for fade-up / fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.fade-up, .fade-in').forEach(el => observer.observe(el));
+
+    // Staggered fade-up for feature items and view cards
+    const staggerObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const parent = entry.target.closest('.features-list, .views-grid');
+          if (parent) {
+            const items = parent.querySelectorAll('.feature-item, .view-card');
+            items.forEach((item, i) => {
+              setTimeout(() => item.classList.add('visible'), i * 100);
+            });
+          }
+          staggerObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // Observe the first item in each stagger group to trigger the whole group
+    document.querySelectorAll('.features-list .feature-item:first-child, .views-grid .view-card:first-child').forEach(el => {
+      staggerObserver.observe(el);
+    });
+
+    // Email form handling
+    document.querySelectorAll('.email-form').forEach(form => {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const btn = form.querySelector('button');
+        const input = form.querySelector('input');
+        btn.textContent = 'Sending...';
+        btn.disabled = true;
+        setTimeout(() => {
+          btn.textContent = "You're in! \u2713";
+          input.value = '';
+          input.disabled = true;
+        }, 1200);
+      });
+    });
+  </script>
+
+</body>
+</html>
