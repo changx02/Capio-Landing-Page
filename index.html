@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Capio — Your Planner, Now Intelligent</title>
-  <meta name="description" content="Capio reads your handwriting, recognizes dates and times, sets reminders, and organizes your day automatically. Join the waitlist for early access. Limited beta spots.">
+  <meta name="description" content="Capio reads your handwriting, recognizes dates and times, sets reminders, and organizes your day automatically. Join the waitlist for early access.<br>Limited beta spots.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
@@ -245,7 +245,7 @@
     }
     .value-prop-grid {
       display: grid;
-      grid-template-columns: 55% 45%;
+      grid-template-columns: 1fr 1fr;
       gap: 2rem;
       align-items: start;
     }
@@ -303,52 +303,92 @@
     .problem {
       padding: var(--section-padding);
     }
-    .problem-grid {
+    .problem-layout {
       display: grid;
-      grid-template-columns: 40% 60%;
-      gap: clamp(2rem, 4vw, 4rem);
+      grid-template-columns: 3fr 1fr;
+      gap: 0;
       align-items: start;
+    }
+    .problem-left {
+      padding-right: clamp(2rem, 3vw, 3rem);
     }
     .problem-heading {
       font-family: var(--font-display);
-      font-size: var(--text-h2);
-      line-height: 1.15;
+      font-size: var(--text-hero);
+      line-height: 1.08;
+      margin-bottom: clamp(2rem, 4vw, 3rem);
     }
-    .problem-details {
+    .problem-videos {
       display: flex;
       flex-direction: column;
-      gap: 2.5rem;
+      gap: 1rem;
     }
-    .problem-item {}
-    .problem-item-header {
+    .problem-item-video {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      background: var(--bg-dark);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .problem-item-video .play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 48px;
+      height: 48px;
+      background: rgba(245, 240, 232, 0.15);
+      border: 1px solid rgba(245, 240, 232, 0.25);
+      border-radius: 50%;
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 0.75rem;
+      justify-content: center;
     }
-    .problem-item-marker {
-      width: 10px;
-      height: 10px;
-      border: 1.5px solid var(--text-primary);
-      border-radius: 50%;
-      flex-shrink: 0;
+    .problem-item-video .play-btn svg {
+      width: 16px;
+      height: 16px;
+      margin-left: 2px;
+    }
+    .problem-right {
+      border-left: 1px solid var(--border);
+      padding-left: clamp(2rem, 3vw, 3rem);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .problem-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .problem-item {}
+    .problem-item-icon {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 1.25rem;
+    }
+    .problem-item-icon svg {
+      width: 100%;
+      height: 100%;
     }
     .problem-item-name {
       font-size: var(--text-label);
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.15em;
+      margin-bottom: 0.75rem;
     }
     .problem-item-desc {
       font-size: var(--text-body);
       color: var(--text-secondary);
       line-height: 1.7;
-      padding-left: calc(10px + 0.75rem);
     }
     .problem-closing {
       font-size: var(--text-h3);
       font-weight: 700;
-      margin-top: 1rem;
+      margin-top: clamp(2rem, 4vw, 3rem);
       line-height: 1.4;
     }
 
@@ -361,31 +401,93 @@
     .solution .section-label {
       color: rgba(245, 240, 232, 0.4);
     }
+    .solution-layout {
+      display: flex;
+      flex-direction: column;
+    }
+    .solution-left {
+      margin-bottom: clamp(2rem, 4vw, 3rem);
+    }
     .solution-headline {
       font-family: var(--font-display);
       font-size: var(--text-hero);
       line-height: 1.12;
-      margin-bottom: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 1.5rem;
     }
-    .solution-negatives {
-      display: flex;
-      gap: clamp(2rem, 4vw, 4rem);
-      margin-bottom: clamp(2rem, 4vw, 3rem);
-    }
-    .solution-negatives span {
+    .solution-desc {
       font-size: var(--text-h3);
       font-weight: 500;
-    }
-    .solution-closing {
-      font-size: var(--text-body);
-      color: rgba(245, 240, 232, 0.7);
-      line-height: 1.7;
-    }
-    .solution-closing strong {
-      display: block;
-      margin-top: 0.25rem;
       color: var(--text-on-dark);
+      line-height: 1.5;
+    }
+    .solution-video {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: rgba(245, 240, 232, 0.08);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
+    }
+    .solution-video .play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 64px;
+      height: 64px;
+      background: rgba(245, 240, 232, 0.15);
+      border: 1px solid rgba(245, 240, 232, 0.25);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .solution-video .play-btn svg {
+      width: 20px;
+      height: 20px;
+      margin-left: 2px;
+    }
+    .solution-divider {
+      border: none;
+      border-top: 1px solid rgba(245, 240, 232, 0.2);
+      margin: 0 0 clamp(2rem, 4vw, 3rem);
+    }
+    .solution-features {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+    .solution-feature {
+      border-left: 1px solid rgba(245, 240, 232, 0.15);
+      padding: 0 clamp(1rem, 2vw, 1.5rem);
+    }
+    .solution-feature:first-child {
+      border-left: none;
+      padding-left: 0;
+    }
+    .solution-feature:last-child {
+      padding-right: 0;
+    }
+    .solution-feature-icon {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 1.25rem;
+    }
+    .solution-feature-icon svg {
+      width: 100%;
+      height: 100%;
+    }
+    .solution-feature-name {
+      font-size: var(--text-h3);
       font-weight: 500;
+      color: var(--text-on-dark);
+      margin-bottom: 0.5rem;
+    }
+    .solution-feature-desc {
+      font-size: var(--text-small);
+      color: rgba(245, 240, 232, 0.5);
+      line-height: 1.5;
     }
 
     /* ── SECTION 5: DEMO 1 ── */
@@ -445,88 +547,71 @@
     }
     .features-layout {
       display: grid;
-      grid-template-columns: 40% 55%;
-      gap: clamp(2rem, 4vw, 5%);
+      grid-template-columns: 1fr 2fr;
+      gap: clamp(2rem, 4vw, 4rem);
       align-items: start;
     }
     .features-left {
-      position: relative;
-    }
-    .features-heading {
-      font-family: var(--font-display);
-      font-size: var(--text-h2);
-      line-height: 1.15;
-      margin-bottom: clamp(2rem, 4vw, 3rem);
-    }
-    .features-sticky {
       position: sticky;
       top: 100px;
     }
-    .features-ipad {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      background: var(--bg-dark);
-      border-radius: 8px;
-      overflow: hidden;
+    .features-heading {
+      font-family: var(--font-display);
+      font-size: var(--text-hero);
+      line-height: 1.08;
+      margin-bottom: 1.5rem;
     }
-    .features-ipad .play-btn {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 56px;
-      height: 56px;
-      background: rgba(245, 240, 232, 0.15);
-      border: 1px solid rgba(245, 240, 232, 0.3);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .features-desc {
+      font-size: var(--text-body);
+      color: var(--text-secondary);
+      line-height: 1.7;
     }
-    .features-ipad .play-btn svg {
-      width: 18px;
-      height: 18px;
-      margin-left: 2px;
-    }
-    .features-list {
+    .features-grid {
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: clamp(1.5rem, 3vw, 2rem);
     }
-    .feature-item {
+    .feature-card {
       opacity: 0;
       transform: translateY(20px);
       transition: opacity 0.5s ease, transform 0.5s ease;
     }
-    .feature-item.visible {
+    .feature-card.visible {
       opacity: 1;
       transform: translateY(0);
     }
-    .feature-item-header {
+    .feature-card-thumb {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: var(--bg-dark);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+    }
+    .feature-card-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(1rem, 2vw, 1.5rem);
+    }
+    .feature-card-row .feature-card-thumb {
+      aspect-ratio: 4 / 3;
+    }
+    .feature-card-info {
       display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 0.5rem;
+      justify-content: space-between;
+      align-items: baseline;
     }
-    .feature-item-marker {
-      width: 10px;
-      height: 10px;
-      border: 1.5px solid var(--text-primary);
-      border-radius: 50%;
-      flex-shrink: 0;
+    .feature-card-name {
+      font-size: var(--text-h3);
+      font-weight: 500;
     }
-    .feature-item-name {
+    .feature-card-label {
       font-size: var(--text-label);
-      font-weight: 700;
+      font-weight: 500;
       text-transform: uppercase;
-      letter-spacing: 0.15em;
-    }
-    .feature-item-desc {
-      font-size: var(--text-body);
-      color: var(--text-secondary);
-      line-height: 1.6;
-      padding-left: calc(10px + 0.75rem);
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
     }
     .features-footnote {
       font-size: var(--text-small);
@@ -547,7 +632,7 @@
     }
     .views-grid {
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: clamp(0.75rem, 1.5vw, 1.5rem);
       margin-bottom: clamp(2rem, 4vw, 3rem);
     }
@@ -563,7 +648,7 @@
     .view-card-thumb {
       position: relative;
       width: 100%;
-      aspect-ratio: 3 / 4;
+      aspect-ratio: 16 / 10;
       background: var(--bg-dark);
       border: 1px solid var(--border);
       border-radius: 4px;
@@ -875,8 +960,7 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 1199px) {
       .value-prop-grid { grid-template-columns: 50% 50%; }
-      .problem-grid { grid-template-columns: 50% 50%; }
-      .features-layout { grid-template-columns: 45% 50%; }
+      .features-layout { grid-template-columns: 1fr 2fr; }
       .comparison-grid { grid-template-columns: 40% 60%; }
       .pricing-grid { grid-template-columns: 45% 55%; }
       .privacy-grid { grid-template-columns: 45% 55%; }
@@ -886,23 +970,27 @@
       .value-prop-grid {
         grid-template-columns: 1fr;
       }
-      .problem-grid {
+      .problem-layout {
         grid-template-columns: 1fr;
       }
-      .solution-negatives {
-        flex-direction: column;
-        gap: 0.75rem;
+      .problem-right {
+        border-left: none;
+        padding-left: 0;
+        border-top: 1px solid var(--border);
+        padding-top: clamp(2rem, 4vw, 3rem);
+      }
+      .solution-features {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem 0;
       }
       .features-layout {
         grid-template-columns: 1fr;
       }
-      .features-sticky {
+      .features-left {
         position: static;
       }
       .views-grid {
-        grid-template-columns: repeat(3, 1fr);
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
+        grid-template-columns: repeat(2, 1fr);
       }
       .view-card {
         scroll-snap-align: start;
@@ -980,7 +1068,7 @@
             <input type="email" placeholder="your@email.com" required>
             <button type="submit">Join Waitlist</button>
           </form>
-          <p class="value-prop-note">Join the waitlist for early access. Limited beta spots.</p>
+          <p class="value-prop-note">Join the waitlist for early access.<br>Limited beta spots.</p>
         </div>
       </div>
     </div>
@@ -992,25 +1080,45 @@
   <section class="problem">
     <div class="container">
       <p class="section-label fade-up">The Problem</p>
-      <div class="problem-grid">
-        <h2 class="problem-heading fade-up">Planning shouldn't<br>be this much work.</h2>
-        <div class="problem-details">
-          <div class="problem-item fade-up">
-            <div class="problem-item-header">
-              <div class="problem-item-marker"></div>
-              <span class="problem-item-name">Paper Planners</span>
+      <h2 class="problem-heading fade-up">Planning shouldn't<br>be this much work.</h2>
+      <div class="problem-layout">
+        <div class="problem-left">
+          <div class="problem-videos fade-up">
+            <div class="problem-item-video" role="img" aria-label="Paper planner frustration video placeholder">
+              <div class="play-btn">
+                <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
+              </div>
             </div>
+            <div class="problem-item-video" role="img" aria-label="Digital planner frustration video placeholder">
+              <div class="play-btn">
+                <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="problem-right">
+          <div class="problem-item fade-up">
+            <div class="problem-item-icon">
+              <svg viewBox="0 0 40 40" fill="none" stroke="var(--text-primary)" stroke-width="1">
+                <circle cx="20" cy="20" r="16"/>
+                <path d="M14 20h12M20 14v12" stroke-width="1"/>
+              </svg>
+            </div>
+            <p class="problem-item-name">Paper Planners</p>
             <p class="problem-item-desc">
-              You write a task. Then you rewrite it tomorrow. Then again next week. You flip pages. You miss things. No reminders.
+              You write a task.<br>Then you rewrite it tomorrow.<br>Then again next week.<br>You flip pages.<br>You miss things.<br>No reminders.
             </p>
           </div>
           <div class="problem-item fade-up">
-            <div class="problem-item-header">
-              <div class="problem-item-marker"></div>
-              <span class="problem-item-name">Digital Planners</span>
+            <div class="problem-item-icon">
+              <svg viewBox="0 0 40 40" fill="none" stroke="var(--text-primary)" stroke-width="1">
+                <rect x="8" y="6" width="24" height="28" rx="2"/>
+                <line x1="14" y1="14" x2="26" y2="14"/><line x1="14" y1="20" x2="26" y2="20"/><line x1="14" y1="26" x2="22" y2="26"/>
+              </svg>
             </div>
+            <p class="problem-item-name">Digital Planners</p>
             <p class="problem-item-desc">
-              Five taps to create one meeting. No free writing. No flexibility. No flow. One note turns into five steps.
+              Five taps to create one meeting.<br>No free writing.<br>No flexibility.<br>No flow.<br>One note turns into five steps.
             </p>
           </div>
         </div>
@@ -1024,17 +1132,57 @@
   <!-- ── SECTION 4: THE SOLUTION ── -->
   <section class="solution">
     <div class="container">
-      <p class="section-label">The Solution</p>
-      <h2 class="solution-headline">Think once.<br>Write once.<br>Done.</h2>
-      <div class="solution-negatives">
-        <span>No sorting.</span>
-        <span>No rewriting.</span>
-        <span>No second pass.</span>
+      <p class="section-label fade-up">The Solution</p>
+      <div class="solution-layout">
+        <div class="solution-left fade-up">
+          <h2 class="solution-headline">Write the way you think.</h2>
+          <p class="solution-desc">Tomorrow. Next week. Mon at 2pm.<br>Capio understands you.</p>
+        </div>
+        <div class="solution-video fade-in">
+          <div class="play-btn">
+            <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
+          </div>
+        </div>
+        <hr class="solution-divider">
+        <div class="solution-features fade-up">
+          <div class="solution-feature">
+            <div class="solution-feature-icon">
+              <svg viewBox="0 0 40 40" fill="none" stroke="#F5F0E8" stroke-width="1">
+                <path d="M8 32l4-16L28 8l4 4-16 16z"/><path d="M12 16l4 4"/><line x1="8" y1="36" x2="24" y2="36"/>
+              </svg>
+            </div>
+            <p class="solution-feature-name">Write naturally</p>
+            <p class="solution-feature-desc">No structure needed</p>
+          </div>
+          <div class="solution-feature">
+            <div class="solution-feature-icon">
+              <svg viewBox="0 0 40 40" fill="none" stroke="#F5F0E8" stroke-width="1">
+                <circle cx="20" cy="20" r="12"/><circle cx="20" cy="12" r="6"/><circle cx="20" cy="28" r="6"/>
+              </svg>
+            </div>
+            <p class="solution-feature-name">Dates and times understood</p>
+            <p class="solution-feature-desc">Placed instantly</p>
+          </div>
+          <div class="solution-feature">
+            <div class="solution-feature-icon">
+              <svg viewBox="0 0 40 40" fill="none" stroke="#F5F0E8" stroke-width="1">
+                <circle cx="20" cy="20" r="14"/><polyline points="20,12 20,20 26,24"/>
+              </svg>
+            </div>
+            <p class="solution-feature-name">Automatically scheduled</p>
+            <p class="solution-feature-desc">Reminders handled</p>
+          </div>
+          <div class="solution-feature">
+            <div class="solution-feature-icon">
+              <svg viewBox="0 0 40 40" fill="none" stroke="#F5F0E8" stroke-width="1">
+                <rect x="6" y="10" width="12" height="16" rx="2"/><rect x="22" y="10" width="12" height="16" rx="2"/><path d="M18 18h4M18 22h4"/>
+              </svg>
+            </div>
+            <p class="solution-feature-name">Everything in sync.</p>
+            <p class="solution-feature-desc">Only what matters, where it matters.</p>
+          </div>
+        </div>
       </div>
-      <p class="solution-closing">
-        You don't have to organize your planner anymore.
-        <strong>You just use it.</strong>
-      </p>
     </div>
   </section>
 
@@ -1057,13 +1205,13 @@
   <!-- ── SECTION 6: DEMO 2 ── -->
   <section class="demo">
     <div class="container">
-      <h2 class="demo-headline fade-up">One brain dump.<br>Your entire week — organized.</h2>
+      <h2 class="demo-headline fade-up">Capture everything in one place.</h2>
       <div class="demo-media fade-in" role="img" aria-label="Demo: brain dump routing GIF placeholder">
         <div class="play-btn">
           <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
         </div>
       </div>
-      <p class="demo-caption fade-up demo-caption-bold">You wrote it once. Capio handled the rest.</p>
+      <p class="demo-caption fade-up">Every task placed. Every schedule set. Everything where it should be.<br>Capio organizes it across your days, weeks, and months.</p>
     </div>
   </section>
 
@@ -1074,69 +1222,65 @@
     <div class="container">
       <p class="section-label fade-up">Features</p>
       <div class="features-layout">
-        <div class="features-left">
-          <h2 class="features-heading fade-up">Everything you need.<br>Nothing you don't.</h2>
-          <div class="features-sticky">
-            <div class="features-ipad fade-in" role="img" aria-label="iPad Daily View screenshot placeholder">
-              <div class="play-btn">
-                <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
+        <div class="features-left fade-up">
+          <h2 class="features-heading">Everything you need.<br>Nothing you don't.</h2>
+          <p class="features-desc">Plus search, freehand notes, and drawing — built in.</p>
+        </div>
+        <div class="features-grid">
+          <!-- Hero feature — full width -->
+          <div class="feature-card fade-up">
+            <div class="feature-card-thumb"></div>
+            <div class="feature-card-info">
+              <span class="feature-card-name">Gestures</span>
+            </div>
+          </div>
+          <!-- Row of 2 -->
+          <div class="feature-card-row">
+            <div class="feature-card fade-up">
+              <div class="feature-card-thumb"></div>
+              <div class="feature-card-info">
+                <span class="feature-card-name">Auto-Rollover</span>
+              </div>
+            </div>
+            <div class="feature-card fade-up">
+              <div class="feature-card-thumb"></div>
+              <div class="feature-card-info">
+                <span class="feature-card-name">Focus 3</span>
+              </div>
+            </div>
+          </div>
+          <!-- Row of 2 -->
+          <div class="feature-card-row">
+            <div class="feature-card fade-up">
+              <div class="feature-card-thumb"></div>
+              <div class="feature-card-info">
+                <span class="feature-card-name">Time Block</span>
+              </div>
+            </div>
+            <div class="feature-card fade-up">
+              <div class="feature-card-thumb"></div>
+              <div class="feature-card-info">
+                <span class="feature-card-name">Action List</span>
+              </div>
+            </div>
+          </div>
+          <!-- Row of 2 -->
+          <div class="feature-card-row">
+            <div class="feature-card fade-up">
+              <div class="feature-card-thumb"></div>
+              <div class="feature-card-info">
+                <span class="feature-card-name">Capture</span>
+              </div>
+            </div>
+            <div class="feature-card fade-up">
+              <div class="feature-card-thumb"></div>
+              <div class="feature-card-info">
+                <span class="feature-card-name">Sprint Goals</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="features-list">
-          <div class="feature-item">
-            <div class="feature-item-header">
-              <div class="feature-item-marker"></div>
-              <span class="feature-item-name">Focus 3</span>
-            </div>
-            <p class="feature-item-desc">Three priorities. Every morning. Circle any task to promote it.</p>
-          </div>
-          <div class="feature-item">
-            <div class="feature-item-header">
-              <div class="feature-item-marker"></div>
-              <span class="feature-item-name">Action List</span>
-            </div>
-            <p class="feature-item-desc">Everything else lives here. Write tasks freely. They move at your speed.</p>
-          </div>
-          <div class="feature-item">
-            <div class="feature-item-header">
-              <div class="feature-item-marker"></div>
-              <span class="feature-item-name">Time Block</span>
-            </div>
-            <p class="feature-item-desc">Write a time. It lands. Reminder set.</p>
-          </div>
-          <div class="feature-item">
-            <div class="feature-item-header">
-              <div class="feature-item-marker"></div>
-              <span class="feature-item-name">Gestures</span>
-            </div>
-            <p class="feature-item-desc">Checkmark — done. Chevron — moved. Circle — promoted. No menus.</p>
-          </div>
-          <div class="feature-item">
-            <div class="feature-item-header">
-              <div class="feature-item-marker"></div>
-              <span class="feature-item-name">Auto-Rollover</span>
-            </div>
-            <p class="feature-item-desc">Didn't finish? Already waiting tomorrow. Never rewrite again.</p>
-          </div>
-          <div class="feature-item">
-            <div class="feature-item-header">
-              <div class="feature-item-marker"></div>
-              <span class="feature-item-name">Sprint Goals</span>
-            </div>
-            <p class="feature-item-desc">Set. Break down. Track.</p>
-          </div>
-          <div class="feature-item">
-            <div class="feature-item-header">
-              <div class="feature-item-marker"></div>
-              <span class="feature-item-name">Brain Dump</span>
-            </div>
-            <p class="feature-item-desc">Dump everything. Capio routes it all. The mess becomes the plan.</p>
-          </div>
-        </div>
       </div>
-      <p class="features-footnote fade-up">Plus search, freehand notes, and drawing — built in.</p>
     </div>
   </section>
 
@@ -1197,7 +1341,7 @@
           <span class="view-card-label">Notes</span>
         </div>
       </div>
-      <p class="views-closing fade-up">Every view syncs. Write once, see everywhere.</p>
+      <p class="views-closing fade-up">Connected across every view.<br>Focused where it matters.</p>
     </div>
   </section>
 
