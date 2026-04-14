@@ -160,7 +160,7 @@
       font-family: var(--font-display);
       font-size: var(--text-hero);
       line-height: 1.08;
-      margin-bottom: 1rem;
+      margin-bottom: clamp(2rem, 4vw, 3.5rem);
       opacity: 0;
       transform: translateY(32px);
       animation: headlineUp 0.6s ease 0.4s forwards;
@@ -250,9 +250,10 @@
       align-items: start;
     }
     .value-prop-desc {
-      font-size: var(--text-body);
-      color: var(--text-secondary);
-      line-height: 1.7;
+      font-size: var(--text-h3);
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.4;
     }
     .value-prop-right {}
     .value-prop-tagline {
@@ -262,9 +263,10 @@
       margin-bottom: 1.5rem;
     }
     .value-prop-note {
-      font-size: var(--text-h3);
-      font-weight: 700;
-      color: var(--text-primary);
+      font-size: var(--text-body);
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.7;
       margin-top: 1rem;
     }
     .email-form {
@@ -415,10 +417,10 @@
       margin-bottom: 1.5rem;
     }
     .solution-desc {
-      font-size: var(--text-h3);
-      font-weight: 500;
-      color: var(--text-on-dark);
-      line-height: 1.5;
+      font-size: var(--text-body);
+      font-weight: 400;
+      color: rgba(245, 240, 232, 0.7);
+      line-height: 1.8;
     }
     .solution-video {
       position: relative;
@@ -485,9 +487,10 @@
       margin-bottom: 0.5rem;
     }
     .solution-feature-desc {
-      font-size: var(--text-small);
-      color: rgba(245, 240, 232, 0.5);
-      line-height: 1.5;
+      font-size: var(--text-body);
+      font-weight: 400;
+      color: rgba(245, 240, 232, 0.7);
+      line-height: 1.8;
     }
 
     /* ── SECTION 5: DEMO 1 ── */
@@ -496,8 +499,8 @@
     }
     .demo-headline {
       font-family: var(--font-display);
-      font-size: var(--text-h2);
-      line-height: 1.15;
+      font-size: var(--text-hero);
+      line-height: 1.08;
       margin-bottom: clamp(2rem, 4vw, 3rem);
     }
     .demo-media {
@@ -532,6 +535,12 @@
       height: 20px;
       margin-left: 2px;
     }
+    .demo-desc {
+      font-size: var(--text-body);
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: clamp(2rem, 4vw, 3rem);
+    }
     .demo-caption {
       font-size: var(--text-h3);
       font-weight: 500;
@@ -545,78 +554,62 @@
     .features {
       padding: var(--section-padding);
     }
-    .features-layout {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: clamp(2rem, 4vw, 4rem);
-      align-items: start;
-    }
-    .features-left {
-      position: sticky;
-      top: 100px;
-    }
     .features-heading {
       font-family: var(--font-display);
       font-size: var(--text-hero);
       line-height: 1.08;
-      margin-bottom: 1.5rem;
+      margin-bottom: clamp(2rem, 4vw, 3rem);
     }
-    .features-desc {
+    .feature-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      align-items: center;
+      padding: clamp(2rem, 4vw, 3rem) 0;
+      border-top: 1px solid var(--border-light);
+    }
+    .feature-row.reverse {
+      grid-template-columns: 1fr 1fr;
+    }
+    .feature-row.reverse .feature-text {
+      order: 2;
+    }
+    .feature-row.reverse .feature-media {
+      order: 1;
+    }
+    .feature-text {
+      padding-right: clamp(1.5rem, 3vw, 3rem);
+    }
+    .feature-row.reverse .feature-text {
+      padding-right: 0;
+      padding-left: clamp(1.5rem, 3vw, 3rem);
+    }
+    .feature-name {
+      font-size: var(--text-h3);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.75rem;
+    }
+    .feature-desc {
       font-size: var(--text-body);
       color: var(--text-secondary);
       line-height: 1.7;
     }
-    .features-grid {
-      display: flex;
-      flex-direction: column;
-      gap: clamp(1.5rem, 3vw, 2rem);
-    }
-    .feature-card {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-    .feature-card.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .feature-card-thumb {
+    .feature-media {
       position: relative;
       width: 100%;
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 16 / 10;
       background: var(--bg-dark);
       border-radius: 8px;
       overflow: hidden;
-      margin-bottom: 0.75rem;
-    }
-    .feature-card-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(1rem, 2vw, 1.5rem);
-    }
-    .feature-card-row .feature-card-thumb {
-      aspect-ratio: 4 / 3;
-    }
-    .feature-card-info {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-    }
-    .feature-card-name {
-      font-size: var(--text-h3);
-      font-weight: 500;
-    }
-    .feature-card-label {
-      font-size: var(--text-label);
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--text-muted);
     }
     .features-footnote {
       font-size: var(--text-small);
       color: var(--text-muted);
-      margin-top: 2rem;
+      margin-top: clamp(2rem, 4vw, 3rem);
+      padding-top: clamp(2rem, 4vw, 3rem);
+      border-top: 1px solid var(--border-light);
     }
 
     /* ── SECTION 8: VIEWS ── */
@@ -684,8 +677,9 @@
       color: var(--text-secondary);
     }
     .views-closing {
-      font-size: var(--text-body);
+      font-size: var(--text-h3);
       font-weight: 500;
+      line-height: 1.5;
     }
 
     /* ── SECTION 9: COMPARISON ── */
@@ -960,7 +954,6 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 1199px) {
       .value-prop-grid { grid-template-columns: 50% 50%; }
-      .features-layout { grid-template-columns: 1fr 2fr; }
       .comparison-grid { grid-template-columns: 40% 60%; }
       .pricing-grid { grid-template-columns: 45% 55%; }
       .privacy-grid { grid-template-columns: 45% 55%; }
@@ -983,11 +976,15 @@
         grid-template-columns: 1fr 1fr;
         gap: 1.5rem 0;
       }
-      .features-layout {
+      .feature-row,
+      .feature-row.reverse {
         grid-template-columns: 1fr;
       }
-      .features-left {
-        position: static;
+      .feature-row.reverse .feature-text {
+        order: 1;
+      }
+      .feature-row.reverse .feature-media {
+        order: 2;
       }
       .views-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -1041,8 +1038,7 @@
   <section class="hero">
     <div class="container">
       <p class="section-label">Introducing Capio</p>
-      <h1 class="hero-headline">Stop rewriting<br>your planner.</h1>
-      <p class="hero-sub">Write it once. It's handled.</p>
+      <h1 class="hero-headline">Write once.<br>Everything's handled.</h1>
       <div class="hero-video">
         <div class="ipad-frame">
           <div class="ipad-screen">
@@ -1061,7 +1057,7 @@
     <div class="container">
       <div class="value-prop-grid">
         <p class="value-prop-desc">
-          Write everything once across days, weeks, and months.<br>Capio turns it into a fully organized plan with reminders set instantly.
+          Tasks routed. Reminders set. Every view updated across days, weeks, and months.
         </p>
         <div class="value-prop-right">
           <form class="email-form" id="notify">
@@ -1080,7 +1076,7 @@
   <section class="problem">
     <div class="container">
       <p class="section-label fade-up">The Problem</p>
-      <h2 class="problem-heading fade-up">Planning shouldn't<br>be this much work.</h2>
+      <h2 class="problem-heading fade-up">Your planner is<br>slowing you down.</h2>
       <div class="problem-layout">
         <div class="problem-left">
           <div class="problem-videos fade-up">
@@ -1100,8 +1096,8 @@
           <div class="problem-item fade-up">
             <div class="problem-item-icon">
               <svg viewBox="0 0 40 40" fill="none" stroke="var(--text-primary)" stroke-width="1">
-                <circle cx="20" cy="20" r="16"/>
-                <path d="M14 20h12M20 14v12" stroke-width="1"/>
+                <rect x="8" y="6" width="24" height="28" rx="2"/>
+                <line x1="14" y1="14" x2="26" y2="14"/><line x1="14" y1="20" x2="26" y2="20"/><line x1="14" y1="26" x2="22" y2="26"/>
               </svg>
             </div>
             <p class="problem-item-name">Paper Planners</p>
@@ -1112,13 +1108,13 @@
           <div class="problem-item fade-up">
             <div class="problem-item-icon">
               <svg viewBox="0 0 40 40" fill="none" stroke="var(--text-primary)" stroke-width="1">
-                <rect x="8" y="6" width="24" height="28" rx="2"/>
-                <line x1="14" y1="14" x2="26" y2="14"/><line x1="14" y1="20" x2="26" y2="20"/><line x1="14" y1="26" x2="22" y2="26"/>
+                <circle cx="20" cy="20" r="16"/>
+                <path d="M14 20h12M20 14v12" stroke-width="1"/>
               </svg>
             </div>
             <p class="problem-item-name">Digital Planners</p>
             <p class="problem-item-desc">
-              Five taps to create one meeting.<br>No free writing.<br>No flexibility.<br>No flow.<br>One note turns into five steps.
+              You tap to add.<br>Type a task.<br>Pick a date.<br>Pick a time.<br>Pick where it goes.<br>You switch screens.<br>Set a reminder.<br>You lose the thought.<br>One task turns into five steps.
             </p>
           </div>
         </div>
@@ -1136,7 +1132,7 @@
       <div class="solution-layout">
         <div class="solution-left fade-up">
           <h2 class="solution-headline">Write the way you think.</h2>
-          <p class="solution-desc">Tomorrow. Next week. Mon at 2pm.<br>Capio understands you.</p>
+          <p class="solution-desc">Tomorrow. Next week. Mon at 2pm.<br>Capio reads it, places it, and reminds you.</p>
         </div>
         <div class="solution-video fade-in">
           <div class="play-btn">
@@ -1151,8 +1147,8 @@
                 <path d="M8 32l4-16L28 8l4 4-16 16z"/><path d="M12 16l4 4"/><line x1="8" y1="36" x2="24" y2="36"/>
               </svg>
             </div>
-            <p class="solution-feature-name">Write naturally</p>
-            <p class="solution-feature-desc">No structure needed</p>
+            <p class="solution-feature-name">Natural writing</p>
+            <p class="solution-feature-desc">Write freely. No structure.</p>
           </div>
           <div class="solution-feature">
             <div class="solution-feature-icon">
@@ -1160,8 +1156,8 @@
                 <circle cx="20" cy="20" r="12"/><circle cx="20" cy="12" r="6"/><circle cx="20" cy="28" r="6"/>
               </svg>
             </div>
-            <p class="solution-feature-name">Dates and times understood</p>
-            <p class="solution-feature-desc">Placed instantly</p>
+            <p class="solution-feature-name">Any date, any format</p>
+            <p class="solution-feature-desc">Tomorrow. Friday. March 28.<br>It lands instantly.</p>
           </div>
           <div class="solution-feature">
             <div class="solution-feature-icon">
@@ -1169,8 +1165,8 @@
                 <circle cx="20" cy="20" r="14"/><polyline points="20,12 20,20 26,24"/>
               </svg>
             </div>
-            <p class="solution-feature-name">Automatically scheduled</p>
-            <p class="solution-feature-desc">Reminders handled</p>
+            <p class="solution-feature-name">Already scheduled</p>
+            <p class="solution-feature-desc">Reminders handled.</p>
           </div>
           <div class="solution-feature">
             <div class="solution-feature-icon">
@@ -1178,8 +1174,8 @@
                 <rect x="6" y="10" width="12" height="16" rx="2"/><rect x="22" y="10" width="12" height="16" rx="2"/><path d="M18 18h4M18 22h4"/>
               </svg>
             </div>
-            <p class="solution-feature-name">Everything in sync.</p>
-            <p class="solution-feature-desc">Only what matters, where it matters.</p>
+            <p class="solution-feature-name">Always in place</p>
+            <p class="solution-feature-desc">Write once. See it where it matters.</p>
           </div>
         </div>
       </div>
@@ -1189,31 +1185,18 @@
   <!-- ── SECTION 5: DEMO 1 — HOW IT WORKS ── -->
   <section class="demo">
     <div class="container">
-      <p class="section-label fade-up">How It Works</p>
-      <h2 class="demo-headline fade-up">Write it.<br>Watch it land.</h2>
+      <p class="section-label fade-up">Capture In Action</p>
+      <h2 class="demo-headline fade-up">Capture everything once.</h2>
+      <p class="demo-desc fade-up">Follow up with Sarah about Q3 budget<br>Team standup tomorrow 9am<br>Submit board deck by Friday<br>Call investor 3pm next week</p>
       <div class="demo-media fade-in" role="img" aria-label="Demo: single task routing GIF placeholder">
         <div class="play-btn">
           <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
         </div>
       </div>
-      <p class="demo-caption fade-up">Dates just land. Times just show up.<br>Reminders — already set.</p>
+      <p class="demo-caption fade-up">Everything placed, scheduled, and handled.<br>Your entire plan ready.</p>
     </div>
   </section>
 
-  <hr class="divider">
-
-  <!-- ── SECTION 6: DEMO 2 ── -->
-  <section class="demo">
-    <div class="container">
-      <h2 class="demo-headline fade-up">Capture everything in one place.</h2>
-      <div class="demo-media fade-in" role="img" aria-label="Demo: brain dump routing GIF placeholder">
-        <div class="play-btn">
-          <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
-        </div>
-      </div>
-      <p class="demo-caption fade-up">Every task placed. Every schedule set. Everything where it should be.<br>Capio organizes it across your days, weeks, and months.</p>
-    </div>
-  </section>
 
   <hr class="divider">
 
@@ -1221,66 +1204,44 @@
   <section class="features">
     <div class="container">
       <p class="section-label fade-up">Features</p>
-      <div class="features-layout">
-        <div class="features-left fade-up">
-          <h2 class="features-heading">Everything you need.<br>Nothing you don't.</h2>
-          <p class="features-desc">Plus search, freehand notes, and drawing — built in.</p>
+      <h2 class="features-heading fade-up">Only what you need.<br>Nothing you don't.</h2>
+
+      <!-- 1. Gestures — text left, GIF right -->
+      <div class="feature-row fade-up">
+        <div class="feature-text">
+          <p class="feature-name">Gestures</p>
+          <p class="feature-desc">Done. Moved. Prioritized.<br>No menus. No interruptions.</p>
         </div>
-        <div class="features-grid">
-          <!-- Hero feature — full width -->
-          <div class="feature-card fade-up">
-            <div class="feature-card-thumb"></div>
-            <div class="feature-card-info">
-              <span class="feature-card-name">Gestures</span>
-            </div>
-          </div>
-          <!-- Row of 2 -->
-          <div class="feature-card-row">
-            <div class="feature-card fade-up">
-              <div class="feature-card-thumb"></div>
-              <div class="feature-card-info">
-                <span class="feature-card-name">Auto-Rollover</span>
-              </div>
-            </div>
-            <div class="feature-card fade-up">
-              <div class="feature-card-thumb"></div>
-              <div class="feature-card-info">
-                <span class="feature-card-name">Focus 3</span>
-              </div>
-            </div>
-          </div>
-          <!-- Row of 2 -->
-          <div class="feature-card-row">
-            <div class="feature-card fade-up">
-              <div class="feature-card-thumb"></div>
-              <div class="feature-card-info">
-                <span class="feature-card-name">Time Block</span>
-              </div>
-            </div>
-            <div class="feature-card fade-up">
-              <div class="feature-card-thumb"></div>
-              <div class="feature-card-info">
-                <span class="feature-card-name">Action List</span>
-              </div>
-            </div>
-          </div>
-          <!-- Row of 2 -->
-          <div class="feature-card-row">
-            <div class="feature-card fade-up">
-              <div class="feature-card-thumb"></div>
-              <div class="feature-card-info">
-                <span class="feature-card-name">Capture</span>
-              </div>
-            </div>
-            <div class="feature-card fade-up">
-              <div class="feature-card-thumb"></div>
-              <div class="feature-card-info">
-                <span class="feature-card-name">Sprint Goals</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div class="feature-media" data-autoplay></div>
       </div>
+
+      <!-- 2. Priority — GIF left, text right -->
+      <div class="feature-row reverse fade-up">
+        <div class="feature-text">
+          <p class="feature-name">Priority</p>
+          <p class="feature-desc">Write a number. It moves.<br>Your most important work, always on top.</p>
+        </div>
+        <div class="feature-media" data-autoplay></div>
+      </div>
+
+      <!-- 3. System — text left, GIF right -->
+      <div class="feature-row fade-up">
+        <div class="feature-text">
+          <p class="feature-name">System</p>
+          <p class="feature-desc">Nothing gets dropped.<br>Conflicts are caught.<br>Your plan stays intact.</p>
+        </div>
+        <div class="feature-media" data-autoplay></div>
+      </div>
+
+      <!-- 4. Scheduling — GIF left, text right -->
+      <div class="feature-row reverse fade-up">
+        <div class="feature-text">
+          <p class="feature-name">Scheduling</p>
+          <p class="feature-desc">Every event, in one place.<br>See your time clearly.</p>
+        </div>
+        <div class="feature-media" data-autoplay></div>
+      </div>
+
     </div>
   </section>
 
@@ -1290,8 +1251,16 @@
   <section class="views">
     <div class="container">
       <p class="section-label fade-up">Your Planner</p>
-      <h2 class="views-heading fade-up">One planner. Six views.<br>Your entire year.</h2>
+      <h2 class="views-heading fade-up">One plan.<br>Every timeframe.</h2>
       <div class="views-grid">
+        <div class="view-card">
+          <div class="view-card-thumb">
+            <div class="play-btn-sm">
+              <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
+            </div>
+          </div>
+          <span class="view-card-label">Capture</span>
+        </div>
         <div class="view-card">
           <div class="view-card-thumb">
             <div class="play-btn-sm">
@@ -1330,18 +1299,10 @@
               <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
             </div>
           </div>
-          <span class="view-card-label">Capture</span>
-        </div>
-        <div class="view-card">
-          <div class="view-card-thumb">
-            <div class="play-btn-sm">
-              <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
-            </div>
-          </div>
           <span class="view-card-label">Notes</span>
         </div>
       </div>
-      <p class="views-closing fade-up">Connected across every view.<br>Focused where it matters.</p>
+      <p class="views-closing fade-up">Write once.<br>Nothing to rewrite.</p>
     </div>
   </section>
 
@@ -1353,17 +1314,16 @@
       <p class="section-label fade-up">Why Capio</p>
       <div class="comparison-grid">
         <div>
-          <h2 class="comparison-heading fade-up">What makes Capio<br>different.</h2>
-          <p class="comparison-closing fade-up">Simple like paper.<br>Powerful like software.<br>Nothing else does both.</p>
+          <h2 class="comparison-heading fade-up">Paper is simple.<br>Software is powerful.<br>Capio is both.</h2>
+          <p class="comparison-closing fade-up">Write freely.<br>Everything else is handled.</p>
         </div>
         <div class="comparison-table-wrap">
           <table class="comparison-table fade-up">
             <thead>
               <tr>
-                <th></th>
+                <th>Feature</th>
                 <th>Paper</th>
-                <th>Digital</th>
-                <th>Notes</th>
+                <th>Software</th>
                 <th>Capio</th>
               </tr>
             </thead>
@@ -1373,69 +1333,41 @@
                 <td class="check">&#10003;</td>
                 <td class="cross">&#10005;</td>
                 <td class="check">&#10003;</td>
-                <td class="check">&#10003;</td>
               </tr>
               <tr>
-                <td>Understands writing</td>
-                <td class="cross">&#10005;</td>
-                <td class="cross">&#10005;</td>
-                <td class="cross">&#10005;</td>
-                <td class="check">&#10003;</td>
-              </tr>
-              <tr>
-                <td>Auto-routes tasks</td>
-                <td class="cross">&#10005;</td>
+                <td>Understand what you mean</td>
                 <td class="cross">&#10005;</td>
                 <td class="cross">&#10005;</td>
                 <td class="check">&#10003;</td>
               </tr>
               <tr>
-                <td>Reminders</td>
-                <td class="cross">&#10005;</td>
-                <td class="cross">&#10005;</td>
-                <td class="cross">&#10005;</td>
-                <td class="check">&#10003;</td>
-              </tr>
-              <tr>
-                <td>Rollover</td>
-                <td class="cross">&#10005;</td>
+                <td>Place tasks automatically</td>
                 <td class="cross">&#10005;</td>
                 <td class="cross">&#10005;</td>
                 <td class="check">&#10003;</td>
               </tr>
               <tr>
-                <td>Brain dump</td>
+                <td>Set reminders for you</td>
                 <td class="cross">&#10005;</td>
+                <td class="check">&#10003;</td>
+                <td class="check">&#10003;</td>
+              </tr>
+              <tr>
+                <td>Carry unfinished work forward</td>
                 <td class="cross">&#10005;</td>
+                <td class="check">&#10003;</td>
+                <td class="check">&#10003;</td>
+              </tr>
+              <tr>
+                <td>Capture everything at once</td>
+                <td class="check">&#10003;</td>
                 <td class="cross">&#10005;</td>
                 <td class="check">&#10003;</td>
               </tr>
               <tr>
-                <td>Gestures</td>
-                <td class="cross">&#10005;</td>
-                <td class="cross">&#10005;</td>
-                <td class="cross">&#10005;</td>
-                <td class="check">&#10003;</td>
-              </tr>
-              <tr>
-                <td>No account</td>
+                <td>No menus</td>
                 <td class="check">&#10003;</td>
                 <td class="cross">&#10005;</td>
-                <td class="cross">&#10005;</td>
-                <td class="check">&#10003;</td>
-              </tr>
-              <tr>
-                <td>No tracking</td>
-                <td class="check">&#10003;</td>
-                <td class="cross">&#10005;</td>
-                <td class="cross">&#10005;</td>
-                <td class="check">&#10003;</td>
-              </tr>
-              <tr>
-                <td>iPad + iPhone</td>
-                <td class="cross">&#10005;</td>
-                <td class="check">&#10003;</td>
-                <td class="check">&#10003;</td>
                 <td class="check">&#10003;</td>
               </tr>
             </tbody>
@@ -1582,6 +1514,21 @@
     document.querySelectorAll('.features-list .feature-item:first-child, .views-grid .view-card:first-child').forEach(el => {
       staggerObserver.observe(el);
     });
+
+    // Feature media autoplay observer (for future GIFs/videos)
+    const mediaObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const video = entry.target.querySelector('video');
+        if (!video) return;
+        if (entry.isIntersecting) {
+          video.play();
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('[data-autoplay]').forEach(el => mediaObserver.observe(el));
 
     // Email form handling
     document.querySelectorAll('.email-form').forEach(form => {
