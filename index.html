@@ -579,10 +579,12 @@
     }
     .feature-text {
       padding-right: clamp(1.5rem, 3vw, 3rem);
+      text-align: right;
     }
     .feature-row.reverse .feature-text {
       padding-right: 0;
       padding-left: clamp(1.5rem, 3vw, 3rem);
+      text-align: left;
     }
     .feature-name {
       font-size: var(--text-h3);
@@ -619,8 +621,8 @@
     }
     .views-heading {
       font-family: var(--font-display);
-      font-size: var(--text-h2);
-      line-height: 1.15;
+      font-size: var(--text-hero);
+      line-height: 1.08;
       margin-bottom: clamp(2rem, 4vw, 3.5rem);
     }
     .views-grid {
@@ -694,19 +696,20 @@
     }
     .comparison-heading {
       font-family: var(--font-display);
-      font-size: var(--text-h2);
-      line-height: 1.15;
-      margin-bottom: 1.5rem;
+      font-size: var(--text-hero);
+      line-height: 1.08;
+      margin-bottom: clamp(3rem, 6vw, 5rem);
     }
     .comparison-closing {
       font-size: var(--text-h3);
       font-weight: 700;
       line-height: 1.4;
+      margin-top: clamp(2rem, 4vw, 3rem);
     }
     .comparison-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: var(--text-small);
+      font-size: var(--text-body);
     }
     .comparison-table thead th {
       text-align: left;
@@ -742,40 +745,40 @@
     }
 
     /* ── SECTION 10: PRICING ── */
-    .pricing {
-      background: var(--bg-secondary);
+    .early-access {
+      background: var(--bg-primary);
       padding: var(--section-padding);
     }
-    .pricing-grid {
+    .early-access-grid {
       display: grid;
       grid-template-columns: 40% 60%;
       gap: clamp(2rem, 4vw, 4rem);
       align-items: start;
       margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
     }
-    .pricing-heading {
+    .early-access-heading {
       font-family: var(--font-display);
       font-size: var(--text-h2);
       line-height: 1.15;
-      margin-bottom: 1rem;
+      margin-bottom: clamp(2rem, 4vw, 3rem);
     }
-    .pricing-sub {
+    .early-access-sub {
       font-size: var(--text-body);
       color: var(--text-secondary);
       line-height: 1.6;
     }
-    .pricing-cards {
+    .early-access-cards {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1.25rem;
     }
-    .pricing-card {
+    .early-access-card {
       border: 1px solid var(--text-primary);
       border-radius: 4px;
       padding: clamp(1.5rem, 3vw, 2rem);
       position: relative;
     }
-    .pricing-card-badge {
+    .early-access-card-badge {
       position: absolute;
       top: -1px;
       left: 1.5rem;
@@ -788,29 +791,29 @@
       padding: 0.25rem 0.625rem;
       border-radius: 0 0 4px 4px;
     }
-    .pricing-card-amount {
+    .early-access-card-amount {
       font-family: var(--font-display);
       font-size: clamp(1.75rem, 3vw, 2.25rem);
       margin-bottom: 0.25rem;
     }
-    .pricing-card-period {
+    .early-access-card-period {
       font-size: var(--text-small);
       color: var(--text-secondary);
     }
-    .pricing-card-save {
+    .early-access-card-save {
       font-size: var(--text-small);
       font-weight: 700;
       margin-top: 0.75rem;
     }
-    .pricing-form-wrap {
+    .early-access-form-wrap {
       max-width: 480px;
     }
-    .pricing-form-wrap .email-form input {
+    .early-access-form-wrap .email-form input {
       background: var(--bg-secondary);
     }
-    .pricing-note {
-      font-size: var(--text-small);
-      color: var(--text-muted);
+    .early-access-note {
+      font-size: var(--text-body);
+      color: var(--text-secondary);
       margin-top: 0.75rem;
     }
 
@@ -819,35 +822,33 @@
       background: var(--bg-dark);
       color: var(--text-on-dark);
       padding: var(--section-padding);
+      padding-bottom: clamp(2rem, 4vw, 3rem);
     }
     .privacy .section-label {
       color: rgba(245, 240, 232, 0.4);
-    }
-    .privacy-grid {
-      display: grid;
-      grid-template-columns: 40% 60%;
-      gap: clamp(2rem, 4vw, 4rem);
-      align-items: start;
-      margin-bottom: clamp(2rem, 4vw, 3rem);
     }
     .privacy-heading {
       font-family: var(--font-display);
       font-size: var(--text-h2);
       line-height: 1.15;
+      margin-bottom: clamp(1.5rem, 3vw, 2rem);
     }
-    .privacy-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-    .privacy-list span {
+    .privacy-details {
       font-size: var(--text-h3);
-      font-weight: 500;
+      font-weight: 700;
+      color: var(--text-on-dark);
+      line-height: 1.4;
+      margin-bottom: clamp(2rem, 3vw, 2.5rem);
     }
     .privacy-closing {
       font-size: var(--text-body);
       color: rgba(245, 240, 232, 0.7);
       line-height: 1.7;
+    }
+    .privacy-divider {
+      border: none;
+      border-top: 1px solid rgba(245, 240, 232, 0.15);
+      margin-top: clamp(2rem, 4vw, 3rem);
     }
 
     /* ── SECTION 12: THE CLOSE ── */
@@ -900,18 +901,23 @@
     .footer {
       background: var(--bg-dark);
       color: var(--text-on-dark);
-      padding: clamp(3rem, 6vw, 5rem) 0;
+      padding: clamp(2rem, 4vw, 3rem) 0;
     }
     .footer-logo {
       display: flex;
       align-items: center;
       gap: 0.6rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1.25rem;
       text-decoration: none;
       color: var(--text-on-dark);
     }
+    .footer-tagline {
+      font-size: var(--text-body);
+      color: rgba(245, 240, 232, 0.7);
+      margin-bottom: 2rem;
+    }
     .footer-logo img {
-      height: 72px;
+      height: 48px;
       width: auto;
       object-fit: contain;
       filter: invert(1) sepia(0.15) saturate(0.5) hue-rotate(5deg) brightness(1.1);
@@ -927,23 +933,45 @@
       max-width: 480px;
       margin-bottom: 2rem;
     }
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem 1.5rem;
-      margin-bottom: 1rem;
+    .footer-columns {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(2rem, 4vw, 4rem);
+      margin-bottom: 2rem;
     }
-    .footer-links a {
+    .footer-col-title {
+      font-size: var(--text-label);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: rgba(245, 240, 232, 0.4);
+      margin-bottom: 0.75rem;
+    }
+    .footer-col-link {
       font-size: var(--text-small);
       color: rgba(245, 240, 232, 0.7);
       text-decoration: none;
       transition: color 0.2s ease;
     }
-    .footer-links a:hover {
+    .footer-col-link:hover {
       color: var(--text-on-dark);
       text-decoration: underline;
     }
-    .footer-links .footer-dot {
+    .footer-col-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+    }
+    .footer-social-icon {
+      color: rgba(245, 240, 232, 0.7);
+      display: flex;
+      align-items: center;
+      transition: color 0.2s ease;
+    }
+    .footer-social-icon:hover {
+      color: var(--text-on-dark);
+    }
+    .footer-dot {
       color: rgba(245, 240, 232, 0.3);
     }
     .footer-copy {
@@ -951,11 +979,285 @@
       color: rgba(245, 240, 232, 0.4);
     }
 
+    /* ── REQUEST ACCESS BUTTON ── */
+    .request-access-btn {
+      font-family: var(--font-body);
+      font-size: var(--text-body);
+      font-weight: 500;
+      padding: 0.85rem 2rem;
+      background: var(--text-primary);
+      color: var(--text-on-dark);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+    .request-access-btn:hover {
+      opacity: 0.85;
+    }
+
+    .demo-cta {
+      margin-top: clamp(2rem, 4vw, 3rem);
+    }
+    .demo-cta-note {
+      font-size: var(--text-body);
+      color: var(--text-muted);
+      margin-top: 0.75rem;
+    }
+    .solution-cta {
+      margin-top: clamp(1rem, 2vw, 1.5rem);
+      margin-bottom: clamp(2rem, 4vw, 3rem);
+      text-align: center;
+    }
+    .request-access-btn-dark {
+      background: var(--text-on-dark);
+      color: var(--text-primary);
+    }
+    .solution-cta-note {
+      font-size: var(--text-body);
+      color: rgba(245, 240, 232, 0.5);
+      margin-top: 0.75rem;
+    }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      max-width: 720px;
+      width: calc(100% - 2rem);
+      max-height: 80vh;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--border-light);
+      flex-shrink: 0;
+    }
+    .modal-title {
+      font-family: var(--font-body);
+      font-size: var(--text-h3);
+      font-weight: 700;
+    }
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      transition: background 0.2s ease;
+    }
+    .modal-close:hover {
+      background: var(--bg-secondary);
+    }
+    .modal-body {
+      padding: 2rem;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .modal-body h3 {
+      font-family: var(--font-body);
+      font-size: var(--text-label);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+    }
+    .modal-body h3:first-child {
+      margin-top: 0;
+    }
+    .modal-body p {
+      font-family: var(--font-body);
+      font-size: var(--text-small);
+      line-height: 1.8;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+    }
+    .modal-body ul {
+      list-style: disc;
+      padding-left: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+    .modal-body li {
+      font-family: var(--font-body);
+      font-size: var(--text-small);
+      line-height: 1.8;
+      color: var(--text-secondary);
+      margin-bottom: 0.25rem;
+    }
+    .modal-body strong {
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+    .modal-body hr {
+      border: none;
+      border-top: 1px solid var(--border-light);
+      margin: 1.5rem 0;
+    }
+
+    /* ── REQUEST MODAL ── */
+    .request-modal-content {
+      max-width: 560px;
+    }
+    .request-heading {
+      font-family: var(--font-body);
+      font-size: var(--text-h3);
+      font-weight: 400;
+      line-height: 1.4;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    .request-sub {
+      font-size: var(--text-h3);
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 0;
+    }
+    .request-divider {
+      border: none;
+      border-top: 1px solid var(--border-light);
+      margin: 1.5rem 0;
+    }
+    .request-question {
+      font-family: var(--font-body);
+      font-size: var(--text-body);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .request-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .request-option {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+      font-size: var(--text-body);
+      color: var(--text-primary);
+    }
+    .request-option input[type="radio"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--border);
+      border-radius: 50%;
+      flex-shrink: 0;
+      cursor: pointer;
+      position: relative;
+    }
+    .request-option input[type="radio"]:checked {
+      border-color: var(--text-primary);
+    }
+    .request-option input[type="radio"]:checked::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 10px;
+      height: 10px;
+      background: var(--text-primary);
+      border-radius: 50%;
+    }
+    .request-email-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--bg-primary);
+      font-family: var(--font-body);
+      font-size: var(--text-body);
+      color: var(--text-primary);
+    }
+    .request-email-input::placeholder {
+      color: var(--text-muted);
+    }
+    .request-email-input:focus {
+      border-color: var(--text-primary);
+      outline: none;
+    }
+    .request-submit {
+      width: 100%;
+      padding: 0.85rem;
+      background: var(--text-primary);
+      color: var(--text-on-dark);
+      border: none;
+      border-radius: 4px;
+      font-family: var(--font-body);
+      font-size: var(--text-body);
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      transition: opacity 0.2s ease;
+    }
+    .request-submit:hover {
+      opacity: 0.85;
+    }
+    .request-fine-print {
+      font-size: var(--text-small);
+      color: var(--text-muted);
+      margin-top: 0.75rem;
+      text-align: center;
+    }
+    .request-confirmation {
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+    .request-confirmation .check-icon {
+      width: 48px;
+      height: 48px;
+      border: 2px solid var(--text-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 1.5rem;
+    }
+    .request-confirmation h3 {
+      font-family: var(--font-display);
+      font-size: var(--text-h3);
+      margin-bottom: 0.5rem;
+    }
+    .request-confirmation p {
+      font-size: var(--text-body);
+      color: var(--text-secondary);
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 1199px) {
       .value-prop-grid { grid-template-columns: 50% 50%; }
       .comparison-grid { grid-template-columns: 40% 60%; }
-      .pricing-grid { grid-template-columns: 45% 55%; }
+      .early-access-grid { grid-template-columns: 45% 55%; }
       .privacy-grid { grid-template-columns: 45% 55%; }
     }
 
@@ -1007,17 +1309,17 @@
         left: 0;
         background: var(--bg-primary);
       }
-      .pricing-grid {
+      .early-access-grid {
         grid-template-columns: 1fr;
       }
-      .pricing-cards {
+      .early-access-cards {
         grid-template-columns: 1fr;
-      }
-      .pricing-card-annual {
-        order: -1;
       }
       .privacy-grid {
         grid-template-columns: 1fr;
+      }
+      .early-access-card-annual {
+        order: -1;
       }
     }
   </style>
@@ -1030,7 +1332,7 @@
       <a href="#" class="nav-logo">
         <img src="capio-logo-3.png" alt="Capio">
       </a>
-      <a href="#notify" class="nav-cta">Join the Waitlist</a>
+      <a href="#" class="nav-cta" data-modal="request-modal">Request Access</a>
     </nav>
   </div>
 
@@ -1060,11 +1362,8 @@
           Tasks routed. Reminders set. Every view updated across days, weeks, and months.
         </p>
         <div class="value-prop-right">
-          <form class="email-form" id="notify">
-            <input type="email" placeholder="your@email.com" required>
-            <button type="submit">Join Waitlist</button>
-          </form>
-          <p class="value-prop-note">Join the waitlist for early access.<br>Limited beta spots.</p>
+          <button class="request-access-btn" data-modal="request-modal">Request Access</button>
+          <p class="value-prop-note">Limited access. Selected users only.</p>
         </div>
       </div>
     </div>
@@ -1194,6 +1493,10 @@
         </div>
       </div>
       <p class="demo-caption fade-up">Everything placed, scheduled, and handled.<br>Your entire plan ready.</p>
+      <div class="demo-cta fade-up">
+        <button class="request-access-btn" data-modal="request-modal">Request Access</button>
+        <p class="demo-cta-note">Limited access. Selected users only.</p>
+      </div>
     </div>
   </section>
 
@@ -1302,7 +1605,7 @@
           <span class="view-card-label">Notes</span>
         </div>
       </div>
-      <p class="views-closing fade-up">Write once.<br>Nothing to rewrite.</p>
+      <p class="views-closing fade-up">Write it once.<br>See it where it matters.</p>
     </div>
   </section>
 
@@ -1312,101 +1615,77 @@
   <section class="comparison">
     <div class="container">
       <p class="section-label fade-up">Why Capio</p>
-      <div class="comparison-grid">
-        <div>
-          <h2 class="comparison-heading fade-up">Paper is simple.<br>Software is powerful.<br>Capio is both.</h2>
-          <p class="comparison-closing fade-up">Write freely.<br>Everything else is handled.</p>
-        </div>
-        <div class="comparison-table-wrap">
-          <table class="comparison-table fade-up">
-            <thead>
-              <tr>
-                <th>Feature</th>
-                <th>Paper</th>
-                <th>Software</th>
-                <th>Capio</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Write freely</td>
-                <td class="check">&#10003;</td>
-                <td class="cross">&#10005;</td>
-                <td class="check">&#10003;</td>
-              </tr>
-              <tr>
-                <td>Understand what you mean</td>
-                <td class="cross">&#10005;</td>
-                <td class="cross">&#10005;</td>
-                <td class="check">&#10003;</td>
-              </tr>
-              <tr>
-                <td>Place tasks automatically</td>
-                <td class="cross">&#10005;</td>
-                <td class="cross">&#10005;</td>
-                <td class="check">&#10003;</td>
-              </tr>
-              <tr>
-                <td>Set reminders for you</td>
-                <td class="cross">&#10005;</td>
-                <td class="check">&#10003;</td>
-                <td class="check">&#10003;</td>
-              </tr>
-              <tr>
-                <td>Carry unfinished work forward</td>
-                <td class="cross">&#10005;</td>
-                <td class="check">&#10003;</td>
-                <td class="check">&#10003;</td>
-              </tr>
-              <tr>
-                <td>Capture everything at once</td>
-                <td class="check">&#10003;</td>
-                <td class="cross">&#10005;</td>
-                <td class="check">&#10003;</td>
-              </tr>
-              <tr>
-                <td>No menus</td>
-                <td class="check">&#10003;</td>
-                <td class="cross">&#10005;</td>
-                <td class="check">&#10003;</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <h2 class="comparison-heading fade-up">Paper is simple.<br>Software is powerful.<br>Capio is both.</h2>
+      <div class="comparison-table-wrap">
+        <table class="comparison-table fade-up">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Paper</th>
+              <th>Software</th>
+              <th>Capio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Write freely</td>
+              <td class="check">&#10003;</td>
+              <td class="cross">&#10005;</td>
+              <td class="check">&#10003;</td>
+            </tr>
+            <tr>
+              <td>Understand what you mean</td>
+              <td class="cross">&#10005;</td>
+              <td class="cross">&#10005;</td>
+              <td class="check">&#10003;</td>
+            </tr>
+            <tr>
+              <td>Place tasks automatically</td>
+              <td class="cross">&#10005;</td>
+              <td class="cross">&#10005;</td>
+              <td class="check">&#10003;</td>
+            </tr>
+            <tr>
+              <td>Set reminders for you</td>
+              <td class="cross">&#10005;</td>
+              <td class="check">&#10003;</td>
+              <td class="check">&#10003;</td>
+            </tr>
+            <tr>
+              <td>Carry unfinished work forward</td>
+              <td class="cross">&#10005;</td>
+              <td class="check">&#10003;</td>
+              <td class="check">&#10003;</td>
+            </tr>
+            <tr>
+              <td>Capture everything at once</td>
+              <td class="check">&#10003;</td>
+              <td class="cross">&#10005;</td>
+              <td class="check">&#10003;</td>
+            </tr>
+            <tr>
+              <td>No menus</td>
+              <td class="check">&#10003;</td>
+              <td class="cross">&#10005;</td>
+              <td class="check">&#10003;</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
+      <p class="comparison-closing fade-up">Write freely.<br>Everything else is handled.</p>
     </div>
   </section>
 
   <hr class="divider">
 
-  <!-- ── SECTION 10: PRICING ── -->
-  <section class="pricing">
+  <!-- ── SECTION 10: EARLY ACCESS ── -->
+  <section class="early-access">
     <div class="container">
-      <p class="section-label fade-up">Pricing</p>
-      <div class="pricing-grid">
-        <div>
-          <h2 class="pricing-heading fade-up">Start your 7-day<br>free trial.</h2>
-          <p class="pricing-sub fade-up">Try everything. Full access.<br>No credit card required.</p>
-        </div>
-        <div class="pricing-cards fade-up">
-          <div class="pricing-card">
-            <p class="pricing-card-amount">$14.99</p>
-            <p class="pricing-card-period">/month</p>
-          </div>
-          <div class="pricing-card pricing-card-annual">
-            <div class="pricing-card-badge">Best Value</div>
-            <p class="pricing-card-amount">$119.99</p>
-            <p class="pricing-card-period">/year</p>
-            <p class="pricing-card-save">Save 4 months</p>
-          </div>
-        </div>
-      </div>
-      <div class="pricing-form-wrap">
-        <form class="email-form">
-          <input type="email" placeholder="your@email.com" required>
-          <button type="submit">Join Waitlist</button>
-        </form>
-        <p class="pricing-note">Launching August 2026. Sign up to be first.</p>
+      <p class="section-label fade-up">Early Access</p>
+      <h2 class="early-access-heading fade-up">Write once.<br>Be among the first to try Capio.</h2>
+      <div class="early-access-form-wrap">
+        <button class="request-access-btn" data-modal="request-modal">Request Access</button>
+        <p class="early-access-note fade-up">Limited access. Selected users only.</p>
       </div>
     </div>
   </section>
@@ -1415,40 +1694,9 @@
   <section class="privacy">
     <div class="container">
       <p class="section-label">Privacy</p>
-      <div class="privacy-grid">
-        <h2 class="privacy-heading">Your data stays on<br>your devices. Period.</h2>
-        <div class="privacy-list">
-          <span>No cloud servers.</span>
-          <span>No tracking.</span>
-          <span>No ads.</span>
-          <span>No account required.</span>
-        </div>
-      </div>
-      <p class="privacy-closing">Built for professionals who take their privacy as seriously as their planning.</p>
-    </div>
-  </section>
-
-  <!-- ── SECTION 12: THE CLOSE ── -->
-  <section class="close-section">
-    <div class="container">
-      <h2 class="close-headline fade-up">Stop organizing<br>your life.</h2>
-      <div class="close-body fade-up">
-        <p>You've rewritten tasks.</p>
-        <p>You've rebuilt your plans.</p>
-        <p>You've lost things.</p>
-        <p class="close-break close-emphasis">Not because you're disorganized.</p>
-        <p class="close-emphasis">Because your tools are.</p>
-      </div>
-      <p class="close-fix fade-up">Capio fixes that.</p>
-      <p class="close-fix fade-up">You write once. It's handled.</p>
-      <h3 class="close-tagline fade-up">Your planner.<br>Now intelligent.</h3>
-      <div class="close-form-wrap">
-        <form class="email-form">
-          <input type="email" placeholder="your@email.com" required>
-          <button type="submit">Join Waitlist</button>
-        </form>
-      </div>
-      <p class="close-sign-off fade-up">Write. Set. Go.</p>
+      <h2 class="privacy-heading">Your data stays with you. Period.</h2>
+      <p class="privacy-details">No Capio servers.<br>No tracking.<br>No ads.<br>No Capio account.</p>
+      <p class="privacy-closing">Built for people who take privacy seriously.</p>
     </div>
   </section>
 
@@ -1458,21 +1706,239 @@
       <a href="#" class="footer-logo">
         <img src="capio-logo-3.png" alt="Capio">
       </a>
-      <p class="section-label">About</p>
-      <p class="footer-about">Designed and built by Vee — a product designer who got tired of choosing between simple and smart.</p>
-      <div class="footer-links">
-        <a href="#">@capioplan</a>
-        <span class="footer-dot">&middot;</span>
-        <a href="mailto:hello@capioplan.com">hello@capioplan.com</a>
-      </div>
-      <div class="footer-links">
-        <a href="#">Privacy Policy</a>
-        <span class="footer-dot">&middot;</span>
-        <a href="#">Terms of Service</a>
+      <p class="footer-tagline">Write once. It's handled.</p>
+      <div class="footer-columns">
+        <div class="footer-col">
+          <p class="footer-col-title">Contact</p>
+          <a href="mailto:vee@capioplan.com" class="footer-col-link">vee@capioplan.com</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-title">Social</p>
+          <div class="footer-col-links">
+            <a href="https://www.instagram.com/capioplan/" target="_blank" rel="noopener" class="footer-social-icon" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+              </svg>
+            </a>
+            <a href="https://www.youtube.com/@capioplan" target="_blank" rel="noopener" class="footer-social-icon" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
+                <path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.94 2C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 001.94-2A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75,15.02 15.5,12 9.75,8.98"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-title">Legal</p>
+          <div class="footer-col-links">
+            <a href="#" class="footer-col-link" data-modal="privacy-modal">Privacy Policy</a>
+            <span class="footer-dot">&middot;</span>
+            <a href="#" class="footer-col-link" data-modal="terms-modal">Terms of Service</a>
+          </div>
+        </div>
       </div>
       <p class="footer-copy">&copy; 2026 Capio</p>
     </div>
   </footer>
+
+  <!-- ── REQUEST ACCESS MODAL ── -->
+  <div class="modal-overlay" id="request-modal">
+    <div class="modal request-modal-content">
+      <div class="modal-header">
+        <span class="modal-title">Request Access</span>
+        <button class="modal-close" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="request-form-body">
+        <p class="request-heading">We're opening Capio to a small group<br>to shape it before launch.</p>
+        <p class="request-sub">A few quick questions.</p>
+        <hr class="request-divider">
+        <p class="request-question">Email</p>
+        <input type="email" class="request-email-input" placeholder="your@email.com" required>
+        <hr class="request-divider">
+        <p class="request-question">How do you plan your work?</p>
+        <div class="request-options">
+          <label class="request-option"><input type="radio" name="plan-method" value="Paper planner"> Paper planner</label>
+          <label class="request-option"><input type="radio" name="plan-method" value="Digital apps"> Digital apps (Notion, Todoist)</label>
+          <label class="request-option"><input type="radio" name="plan-method" value="Mix of both"> Mix of both</label>
+          <label class="request-option"><input type="radio" name="plan-method" value="Nothing consistent"> Nothing consistent</label>
+        </div>
+        <hr class="request-divider">
+        <p class="request-question">What slows you down the most?</p>
+        <div class="request-options">
+          <label class="request-option"><input type="radio" name="frustration" value="Rewriting tasks"> Rewriting tasks across days</label>
+          <label class="request-option"><input type="radio" name="frustration" value="Too many steps"> Too many steps to organize one thing</label>
+          <label class="request-option"><input type="radio" name="frustration" value="Forgetting tasks"> Forgetting tasks that didn't get done</label>
+          <label class="request-option"><input type="radio" name="frustration" value="Too many apps"> Switching between tools to get work done</label>
+        </div>
+        <button class="request-submit" id="request-submit-btn">Request access</button>
+        <p class="request-fine-print">Limited access. We'll reach out.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PRIVACY MODAL ── -->
+  <div class="modal-overlay" id="privacy-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">Privacy Policy</span>
+        <button class="modal-close" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Last updated:</strong> April 2026<br><strong>Contact:</strong> vee@capioplan.com</p>
+        <hr>
+        <h3>Your Data Stays With You</h3>
+        <p>Capio is built on a simple principle: your planning data belongs to you, stays on your devices, and is never accessed by us.</p>
+        <p>Your planner content never leaves your device unless you have iCloud Sync enabled — in which case it goes to your own private iCloud container, which we cannot access. We have no servers storing your planning data. We do not track you. We do not sell your data. We do not run ads.</p>
+        <hr>
+        <h3>What Capio Stores Locally</h3>
+        <ul>
+          <li>All planner content — tasks, notes, time blocks, sprint goals, handwriting</li>
+          <li>App settings and preferences</li>
+          <li>Onboarding completion state</li>
+          <li>Trial start date and status</li>
+          <li>Subscription status</li>
+        </ul>
+        <hr>
+        <h3>What Capio Does Not Collect</h3>
+        <ul>
+          <li>No name, email, or contact information</li>
+          <li>No location data</li>
+          <li>No usage analytics or behavioral tracking</li>
+          <li>No crash reports sent to Capio servers</li>
+          <li>No device identifiers or fingerprinting</li>
+          <li>No advertising identifiers (IDFA)</li>
+          <li>No third-party analytics SDKs</li>
+          <li>No in-app advertising of any kind</li>
+          <li>No data shared with or sold to third parties</li>
+        </ul>
+        <hr>
+        <h3>Apple ID Sign-In</h3>
+        <p>When your trial ends, you sign in with Apple ID. We use this solely to link your planners to your Apple ID, verify subscription status, and enable iCloud sync. We do not use your email for marketing.</p>
+        <hr>
+        <h3>iCloud Sync</h3>
+        <p>If iCloud Sync is enabled, your data lives in your private iCloud container — encrypted, invisible to Capio and Apple. This enables sync between your iPad and iPhone. Disabling iCloud Sync keeps all data local to your device only.</p>
+        <hr>
+        <h3>Handwriting &amp; Text Recognition</h3>
+        <p>All handwriting recognition runs entirely on your iPad using Apple's on-device neural engine. Your handwriting is never transmitted anywhere.</p>
+        <hr>
+        <h3>Notifications &amp; Reminders</h3>
+        <p>All reminders are scheduled locally using Apple's notification system. No notification content is ever sent to any external server.</p>
+        <hr>
+        <h3>Payments</h3>
+        <p>Capio never sees your payment details. Stripe and Apple handle all payment processing under their own privacy policies. Capio receives only a subscription confirmation — never your card number, billing address, or financial information.</p>
+        <hr>
+        <h3>Risk: Data Loss</h3>
+        <p>Deleting the app removes all local data permanently. With iCloud Sync on, your data restores automatically when you reinstall and sign back in with the same Apple ID. Without iCloud Sync, back up your iPad regularly — Capio cannot recover data on your behalf.</p>
+        <hr>
+        <h3>Your Rights</h3>
+        <p><strong>Right to access:</strong> Your data is on your device. You can see it anytime.</p>
+        <p><strong>Right to deletion:</strong> Delete the app to remove all local data permanently. For your iCloud copy: iPad Settings &rarr; Your Name &rarr; iCloud &rarr; Manage Storage &rarr; Capio &rarr; Delete Data.</p>
+        <p><strong>Right to portability:</strong> Your data exists in SwiftData on your device. Data export is planned for a future version.</p>
+        <p><strong>GDPR (EU residents):</strong> For any GDPR-related inquiries, contact vee@capioplan.com. We will respond within 30 days.</p>
+        <p><strong>CCPA (California residents):</strong> Capio does not sell personal information. For CCPA inquiries, contact vee@capioplan.com.</p>
+        <hr>
+        <h3>Changes to This Policy</h3>
+        <p>If Capio's data practices change in a future version — for example, if we add optional cloud features — this policy will be updated and a prominent in-app notification will be shown before the change takes effect. You will never be opted into new data practices without notice.</p>
+        <hr>
+        <h3>Contact</h3>
+        <p>Privacy questions: vee@capioplan.com</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TERMS MODAL ── -->
+  <div class="modal-overlay" id="terms-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">Terms of Service</span>
+        <button class="modal-close" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Last updated:</strong> April 2026<br><strong>Contact:</strong> vee@capioplan.com</p>
+        <hr>
+        <h3>1. Agreement</h3>
+        <p>By downloading, installing, or using Capio, you agree to these Terms of Service. If you do not agree, do not use the app. These terms form a legal agreement between you and the Capio developer.</p>
+        <hr>
+        <h3>2. What Capio Is</h3>
+        <p>Capio is a premium planner application designed for personal and professional productivity. It is available on iPad and iPhone, and requires an Apple Pencil for the full handwriting experience on iPad. Capio is intended for users aged 18 and older.</p>
+        <hr>
+        <h3>3. License</h3>
+        <p>We grant you a limited, non-exclusive, non-transferable, revocable license to use Capio on devices you own or control, for your personal, non-commercial use, subject to these terms.</p>
+        <p>You may not:</p>
+        <ul>
+          <li>Copy, modify, or distribute the app or its content</li>
+          <li>Reverse engineer or attempt to extract the source code</li>
+          <li>Use the app to build a competing product</li>
+          <li>Remove any copyright or proprietary notices</li>
+          <li>Use the app for any unlawful purpose</li>
+        </ul>
+        <hr>
+        <h3>4. Account &amp; Apple ID</h3>
+        <p>Capio uses Apple ID for authentication. You are responsible for maintaining the security of your Apple ID. Any activity under your Apple ID is your responsibility. Capio is not responsible for unauthorized access to your account resulting from your failure to secure your Apple ID.</p>
+        <p>Your subscription is tied to your Apple ID. Capio cannot transfer subscriptions between Apple IDs.</p>
+        <hr>
+        <h3>5. Free Trial</h3>
+        <p>Capio offers a 7-day free trial with full access to all features. The trial begins when you create your first planner. No Apple ID or payment is required during the trial period.</p>
+        <p>When the trial ends, you must sign in with Apple ID and subscribe to continue using the app. Your data from the trial period is preserved and will be accessible upon subscribing.</p>
+        <hr>
+        <h3>6. Subscriptions &amp; Payment</h3>
+        <p><strong>Pricing:</strong> Monthly: $14.99/month. Annual: $119.99/year.</p>
+        <p>Subscriptions automatically renew at the end of each billing period unless cancelled at least 24 hours before renewal.</p>
+        <p><strong>Stripe (web checkout):</strong> Subscriptions purchased via capioplan.com are processed by Stripe and governed by Stripe's terms. You may manage or cancel your subscription at capioplan.com or by contacting vee@capioplan.com.</p>
+        <p><strong>Apple In-App Purchase:</strong> Subscriptions purchased through the App Store are governed by Apple's terms of service. You may manage or cancel via Settings &rarr; Your Name &rarr; Subscriptions.</p>
+        <hr>
+        <h3>7. Refunds</h3>
+        <p><strong>Stripe subscriptions:</strong> Contact vee@capioplan.com within 14 days of charge for refund consideration. Refunds are granted at our discretion.</p>
+        <p><strong>Apple IAP subscriptions:</strong> Refunds are handled by Apple. Contact Apple Support or visit reportaproblem.apple.com.</p>
+        <p>We do not offer refunds for partial subscription periods or for failure to use the app during an active subscription period.</p>
+        <hr>
+        <h3>8. Your Data</h3>
+        <p>You own all content you create in Capio — your tasks, notes, plans, and handwriting. We do not claim any ownership of your planning data.</p>
+        <p>You are responsible for maintaining your own backups. Capio's local-first architecture means data loss from device failure, accidental deletion, or app removal is possible and may be unrecoverable without a backup.</p>
+        <p>We strongly recommend enabling iCloud Sync to protect your data.</p>
+        <hr>
+        <h3>9. Acceptable Use</h3>
+        <p>You agree not to use Capio in any way that:</p>
+        <ul>
+          <li>Violates any applicable law or regulation</li>
+          <li>Infringes the intellectual property rights of any third party</li>
+          <li>Transmits harmful, offensive, or malicious content</li>
+          <li>Attempts to gain unauthorized access to any system</li>
+          <li>Interferes with the proper functioning of the app</li>
+        </ul>
+        <hr>
+        <h3>10. Intellectual Property</h3>
+        <p>Capio, its logo, design, code, and all content created by us are owned by the Capio developer and protected by copyright, trademark, and other intellectual property laws. "Write once. It's handled.", "Write. Set. Go.", and "Capio" are used exclusively by this product.</p>
+        <p>Nothing in these terms transfers any intellectual property rights to you beyond the limited license described in Section 3.</p>
+        <hr>
+        <h3>11. Disclaimers</h3>
+        <p>Capio is provided "as is" and "as available" without warranties of any kind, express or implied. We do not warrant that the app will be uninterrupted or error-free, that defects will be corrected, that the app is free of viruses or harmful components, or that the app will meet your specific requirements.</p>
+        <p>Use of Capio is at your own risk.</p>
+        <hr>
+        <h3>12. Limitation of Liability</h3>
+        <p>To the maximum extent permitted by law, the Capio developer shall not be liable for any indirect, incidental, special, consequential, or punitive damages — including loss of data, loss of profits, or loss of business — arising from your use of or inability to use Capio, even if we have been advised of the possibility of such damages.</p>
+        <p>Our total liability to you for any claim arising from these terms or your use of the app shall not exceed the amount you paid for your Capio subscription in the 12 months preceding the claim.</p>
+        <hr>
+        <h3>13. Termination</h3>
+        <p>We may suspend or terminate your access to Capio at any time if you violate these terms. You may stop using Capio at any time by deleting the app.</p>
+        <p>Upon termination, your license to use Capio ends immediately. Local data on your device is not automatically deleted when your access is terminated — you may retain it on your device but will be unable to use the app.</p>
+        <hr>
+        <h3>14. Changes to These Terms</h3>
+        <p>We may update these terms from time to time. We will notify you of material changes via an in-app notice before the changes take effect. Continued use of Capio after changes take effect constitutes acceptance of the revised terms.</p>
+        <hr>
+        <h3>15. Governing Law</h3>
+        <p>These terms are governed by the laws of the jurisdiction in which the Capio developer operates, without regard to conflict of law principles. Any disputes shall be resolved in the courts of that jurisdiction.</p>
+        <hr>
+        <h3>16. Contact</h3>
+        <p>Questions about these terms: vee@capioplan.com</p>
+      </div>
+    </div>
+  </div>
 
   <!-- ── JS ── -->
   <script>
@@ -1530,20 +1996,47 @@
 
     document.querySelectorAll('[data-autoplay]').forEach(el => mediaObserver.observe(el));
 
-    // Email form handling
-    document.querySelectorAll('.email-form').forEach(form => {
-      form.addEventListener('submit', (e) => {
+    // Modal handling
+    document.querySelectorAll('[data-modal]').forEach(link => {
+      link.addEventListener('click', (e) => {
         e.preventDefault();
-        const btn = form.querySelector('button');
-        const input = form.querySelector('input');
-        btn.textContent = 'Sending...';
-        btn.disabled = true;
-        setTimeout(() => {
-          btn.textContent = "You're in! \u2713";
-          input.value = '';
-          input.disabled = true;
-        }, 1200);
+        const modal = document.getElementById(link.dataset.modal);
+        if (modal) {
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
       });
+    });
+
+    // Request Access form submit
+    document.getElementById('request-submit-btn').addEventListener('click', () => {
+      const email = document.querySelector('.request-email-input');
+      if (!email.value || !email.validity.valid) {
+        email.focus();
+        return;
+      }
+      const body = document.getElementById('request-form-body');
+      body.innerHTML = '<div class="request-confirmation"><div class="check-icon">\u2713</div><h3>You\'re on the list.</h3><p>We\'ll review and reach out.</p></div>';
+    });
+
+    function closeModal(overlay) {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeModal(overlay);
+      });
+      overlay.querySelector('.modal-close').addEventListener('click', () => {
+        closeModal(overlay);
+      });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.active').forEach(closeModal);
+      }
     });
   </script>
 
