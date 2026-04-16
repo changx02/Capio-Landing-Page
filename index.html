@@ -36,9 +36,9 @@
       --text-label: 0.75rem;
       --text-small: 0.875rem;
 
-      --max-width: 1440px;
+      --max-width: 1920px;
       --section-padding: clamp(4rem, 8vw, 7rem) 0;
-      --content-padding: 0 clamp(1.5rem, 4vw, 3rem);
+      --content-padding: 0 clamp(2rem, 5vw, 8rem);
     }
 
     body {
@@ -100,7 +100,7 @@
       justify-content: space-between;
       max-width: var(--max-width);
       margin: 0 auto;
-      padding: 0 clamp(1.5rem, 4vw, 3rem);
+      padding: 0 clamp(2rem, 5vw, 8rem);
     }
     .nav-wrap {
       position: sticky;
@@ -732,6 +732,14 @@
       padding-left: 0;
       color: var(--text-secondary);
     }
+    .comparison-table thead th:first-child,
+    .comparison-table tbody td:first-child {
+      width: 55%;
+    }
+    .comparison-table thead th:not(:first-child),
+    .comparison-table tbody td:not(:first-child) {
+      width: 15%;
+    }
     .comparison-table .check {
       font-weight: 700;
       color: var(--text-primary);
@@ -1261,6 +1269,86 @@
       .privacy-grid { grid-template-columns: 45% 55%; }
     }
 
+    @media (max-width: 768px) {
+      .problem-heading {
+        font-size: clamp(2.5rem, 11vw, 3.5rem);
+      }
+      .problem-layout {
+        display: flex;
+        flex-direction: column;
+      }
+      .problem-left,
+      .problem-right,
+      .problem-videos {
+        display: contents;
+      }
+      .problem-item-video:nth-child(1) { order: 1; }
+      .problem-right .problem-item:nth-child(1) { order: 2; }
+      .problem-item-video:nth-child(2) { order: 3; }
+      .problem-right .problem-item:nth-child(2) { order: 4; }
+      .problem-layout {
+        gap: 2rem;
+      }
+      .problem-item-video {
+        margin-bottom: 0.5rem;
+      }
+      .problem-item {
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--border-light);
+      }
+      .problem-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      .comparison-table {
+        font-size: 0.8rem;
+        table-layout: fixed;
+        width: 100%;
+      }
+      .comparison-table th:first-child,
+      .comparison-table td:first-child {
+        width: 58% !important;
+      }
+      .comparison-table th:not(:first-child),
+      .comparison-table td:not(:first-child) {
+        width: 14% !important;
+        text-align: center !important;
+        padding: 0.35rem 0 !important;
+      }
+      .comparison-table thead th:not(:first-child) {
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        height: 5.5rem;
+        vertical-align: middle;
+        padding: 0 !important;
+      }
+      .comparison-table tbody td {
+        padding: 0.35rem 0 !important;
+      }
+      .feature-text {
+        padding: 0;
+        text-align: right;
+      }
+      .feature-row.reverse .feature-text {
+        padding: 0;
+        text-align: left;
+      }
+      .feature-desc {
+        margin-bottom: 1.25rem;
+      }
+      .solution-feature:nth-child(3) {
+        border-left: none;
+      }
+      .solution-features {
+        padding-bottom: 2rem;
+      }
+      .solution-feature:nth-child(3),
+      .solution-feature:nth-child(4) {
+        border-top: 1px solid rgba(245, 240, 232, 0.15);
+        padding-top: 1.5rem;
+      }
+    }
+
     @media (max-width: 767px) {
       .value-prop-grid {
         grid-template-columns: 1fr;
@@ -1302,7 +1390,21 @@
         padding: 0 clamp(1.5rem, 5vw, 4rem);
       }
       .comparison-table {
-        min-width: 480px;
+        min-width: unset;
+        overflow-x: hidden;
+        table-layout: fixed;
+        width: 100%;
+      }
+      .comparison-table th:first-child,
+      .comparison-table td:first-child {
+        width: 58% !important;
+      }
+      .comparison-table th:not(:first-child),
+      .comparison-table td:not(:first-child) {
+        width: 14% !important;
+        text-align: center !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
       }
       .comparison-table tbody td:first-child {
         position: sticky;
@@ -1320,6 +1422,26 @@
       }
       .early-access-card-annual {
         order: -1;
+      }
+    }
+    @media (max-width: 768px) {
+      .comparison-table {
+        table-layout: fixed !important;
+        width: 100% !important;
+        min-width: 0 !important;
+      }
+      .comparison-table th:first-child,
+      .comparison-table td:first-child {
+        width: 58% !important;
+        padding-left: 0 !important;
+        padding-right: 0.25rem !important;
+      }
+      .comparison-table th:not(:first-child),
+      .comparison-table td:not(:first-child) {
+        width: 14% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        text-align: center !important;
       }
     }
   </style>
@@ -1418,7 +1540,7 @@
           </div>
         </div>
       </div>
-      <p class="problem-closing fade-up">This isn't a discipline problem. It's a tool problem.</p>
+      <p class="problem-closing fade-up">This isn't a discipline problem.<br>It's a tool problem.</p>
     </div>
   </section>
 
@@ -1492,7 +1614,7 @@
           <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
         </div>
       </div>
-      <p class="demo-caption fade-up">Everything placed, scheduled, and handled.<br>Your entire plan ready.</p>
+      <p class="demo-caption fade-up">Everything placed.<br>Scheduled and handled.<br>Your entire plan ready.</p>
       <div class="demo-cta fade-up">
         <button class="request-access-btn" data-modal="request-modal">Request Access</button>
         <p class="demo-cta-note">Limited access. Selected users only.</p>
@@ -1531,7 +1653,7 @@
       <div class="feature-row fade-up">
         <div class="feature-text">
           <p class="feature-name">System</p>
-          <p class="feature-desc">Nothing gets dropped.<br>Conflicts are caught.<br>Your plan stays intact.</p>
+          <p class="feature-desc">Nothing gets dropped.<br>Your plan stays intact.</p>
         </div>
         <div class="feature-media" data-autoplay></div>
       </div>
@@ -1540,7 +1662,7 @@
       <div class="feature-row reverse fade-up">
         <div class="feature-text">
           <p class="feature-name">Scheduling</p>
-          <p class="feature-desc">Every event, in one place.<br>See your time clearly.</p>
+          <p class="feature-desc">Conflicts are caught.<br>Every event, in one place.<br>See your time clearly.</p>
         </div>
         <div class="feature-media" data-autoplay></div>
       </div>
