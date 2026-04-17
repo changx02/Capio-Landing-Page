@@ -644,8 +644,6 @@
       position: relative;
       width: 100%;
       aspect-ratio: 16 / 10;
-      background: var(--bg-dark);
-      border: 1px solid var(--border);
       border-radius: 4px;
       overflow: hidden;
       margin-bottom: 0.5rem;
@@ -1444,6 +1442,12 @@
         text-align: center !important;
       }
     }
+
+    @media (max-width: 768px) {
+      .views-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1680,49 +1684,37 @@
       <div class="views-grid">
         <div class="view-card">
           <div class="view-card-thumb">
-            <div class="play-btn-sm">
-              <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
-            </div>
+            <img src="assets/ipad-capture.png" alt="Capture view" style="width:100%; height:100%; object-fit:cover; display:block;">
           </div>
           <span class="view-card-label">Capture</span>
         </div>
         <div class="view-card">
           <div class="view-card-thumb">
-            <div class="play-btn-sm">
-              <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
-            </div>
+            <img src="assets/ipad-daily.png" alt="Daily view" style="width:100%; height:100%; object-fit:cover; display:block;">
           </div>
           <span class="view-card-label">Daily</span>
         </div>
         <div class="view-card">
           <div class="view-card-thumb">
-            <div class="play-btn-sm">
-              <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
-            </div>
+            <img src="assets/ipad-weekly.png" alt="Weekly view" style="width:100%; height:100%; object-fit:cover; display:block;">
           </div>
           <span class="view-card-label">Weekly</span>
         </div>
         <div class="view-card">
           <div class="view-card-thumb">
-            <div class="play-btn-sm">
-              <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
-            </div>
+            <img src="assets/ipad-monthly.png" alt="Monthly view" style="width:100%; height:100%; object-fit:cover; display:block;">
           </div>
           <span class="view-card-label">Monthly</span>
         </div>
         <div class="view-card">
           <div class="view-card-thumb">
-            <div class="play-btn-sm">
-              <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
-            </div>
+            <img src="assets/ipad-yearly.png" alt="Yearly view" style="width:100%; height:100%; object-fit:cover; display:block;">
           </div>
           <span class="view-card-label">Yearly</span>
         </div>
         <div class="view-card">
           <div class="view-card-thumb">
-            <div class="play-btn-sm">
-              <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
-            </div>
+            <img src="assets/ipad-notes.png" alt="Notes view" style="width:100%; height:100%; object-fit:cover; display:block;">
           </div>
           <span class="view-card-label">Notes</span>
         </div>
