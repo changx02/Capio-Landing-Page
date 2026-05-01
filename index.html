@@ -1450,6 +1450,14 @@
         grid-template-columns: 1fr !important;
       }
     }
+
+    /* Mobile-only line break control for Projects caption */
+    .mobile-break { display: none; }
+    .desktop-only { display: inline; }
+    @media (max-width: 767px) {
+      .mobile-break { display: inline; }
+      .desktop-only { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -1635,14 +1643,14 @@
   <section class="demo projects">
     <div class="container">
       <p class="section-label fade-up">Projects</p>
-      <h2 class="demo-headline fade-up">Write a hashtag.<br>Get a project.</h2>
-      <p class="demo-desc fade-up">Q3 Launch 5/30<br>Finalize deck 5/15<br>Send invites 5/20<br>Team standup Thursday 9am<br>Client review Friday 2pm</p>
+      <h2 class="demo-headline fade-up">One hashtag.<br>A full project.</h2>
+      <p class="demo-desc fade-up">#Q3 Launch<br>Finalize deck Monday<br>Send invites 5/20<br>Team standup Thursday 9am<br>Client review Friday 2pm</p>
       <div class="demo-media fade-in" role="img" aria-label="Demo: hashtag-to-project GIF placeholder">
         <div class="play-btn">
           <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
         </div>
       </div>
-      <p class="demo-caption fade-up">Project created. Subtasks placed.<br>Meetings scheduled. Reminders set.<br>You wrote it once. Capio handled everything.</p>
+      <p class="demo-caption demo-caption-projects fade-up">Project created. Tasks sorted.<br><span class="mobile-break">Meetings scheduled.<br>Reminders set.</span><span class="desktop-only">Meetings scheduled. Reminders set.</span><br>You choose what enters your day.<br>Nothing more.</p>
       <div class="demo-cta fade-up">
         <button class="request-access-btn" data-modal="request-modal">Request Access</button>
         <p class="demo-cta-note">Limited access. Selected users only.</p>
