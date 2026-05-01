@@ -642,6 +642,7 @@
     }
     .view-card-thumb {
       position: relative;
+      z-index: 1;
       width: 100%;
       aspect-ratio: 16 / 10;
       border-radius: 4px;
@@ -653,6 +654,7 @@
       transform: scale(1.02);
     }
     .view-card-thumb .play-btn-sm {
+      pointer-events: none;
       position: absolute;
       top: 50%;
       left: 50%;
@@ -1629,6 +1631,28 @@
 
   <hr class="divider">
 
+  <!-- ── SECTION 6: PROJECTS ── -->
+  <section class="demo projects">
+    <div class="container">
+      <p class="section-label fade-up">Projects</p>
+      <h2 class="demo-headline fade-up">Write a hashtag.<br>Get a project.</h2>
+      <p class="demo-desc fade-up">Q3 Launch 5/30<br>Finalize deck 5/15<br>Send invites 5/20<br>Team standup Thursday 9am<br>Client review Friday 2pm</p>
+      <div class="demo-media fade-in" role="img" aria-label="Demo: hashtag-to-project GIF placeholder">
+        <div class="play-btn">
+          <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
+        </div>
+      </div>
+      <p class="demo-caption fade-up">Project created. Subtasks placed.<br>Meetings scheduled. Reminders set.<br>You wrote it once. Capio handled everything.</p>
+      <div class="demo-cta fade-up">
+        <button class="request-access-btn" data-modal="request-modal">Request Access</button>
+        <p class="demo-cta-note">Limited access. Selected users only.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <hr class="divider">
+
   <!-- ── SECTION 7: FEATURES ── -->
   <section class="features">
     <div class="container">
@@ -2151,30 +2175,6 @@
       if (e.key === 'Escape') {
         document.querySelectorAll('.modal-overlay.active').forEach(closeModal);
       }
-    });
-  </script>
-
-  <div id="lightbox" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:1000; align-items:center; justify-content:center; cursor:pointer;">
-    <img id="lightbox-img" src="" alt="" style="max-width:90vw; max-height:90vh; object-fit:contain; border-radius:4px;">
-  </div>
-
-  <script>
-    // Lightbox for view cards
-    document.querySelectorAll('.view-card img').forEach(img => {
-      img.style.cursor = 'pointer';
-      img.addEventListener('click', () => {
-        const lb = document.getElementById('lightbox');
-        document.getElementById('lightbox-img').src = img.src;
-        lb.style.display = 'flex';
-      });
-    });
-
-    document.getElementById('lightbox').addEventListener('click', () => {
-      document.getElementById('lightbox').style.display = 'none';
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') document.getElementById('lightbox').style.display = 'none';
     });
   </script>
 
