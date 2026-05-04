@@ -1230,7 +1230,7 @@
     .request-submit:hover {
       opacity: 0.85;
     }
-    .request-submit-btn:disabled {
+    #request-submit-btn:disabled {
       opacity: 0.4;
       cursor: not-allowed;
     }
@@ -1921,7 +1921,7 @@
           <label class="request-option"><input type="radio" name="slow" value="Forgetting tasks"> Forgetting tasks that didn't get done</label>
           <label class="request-option"><input type="radio" name="slow" value="Too many apps"> Switching between tools to get work done</label>
         </div>
-        <button class="request-submit" id="request-submit-btn">Request access</button>
+        <button class="request-submit" id="request-submit-btn" disabled>Request access</button>
         <p class="request-fine-print">Limited access. We'll reach out.</p>
       </div>
     </div>
@@ -2160,12 +2160,11 @@
 
     const requestEmailInput = document.querySelector('.request-email-input');
     const requestSubmitBtn = document.getElementById('request-submit-btn');
-
-    requestSubmitBtn.disabled = true;
-
-    requestEmailInput.addEventListener('input', () => {
-      requestSubmitBtn.disabled = !requestEmailInput.validity.valid || requestEmailInput.value.trim() === '';
-    });
+    if (requestEmailInput && requestSubmitBtn) {
+      requestEmailInput.addEventListener('input', () => {
+        requestSubmitBtn.disabled = !requestEmailInput.value.includes('@') || requestEmailInput.value.trim() === '';
+      });
+    }
 
     // Request Access form submit
     document.getElementById('request-submit-btn').addEventListener('click', async () => {
