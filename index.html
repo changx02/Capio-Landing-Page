@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://getlaunchlist.com/js/widget.js" defer></script>
   <style>
     /* ── RESET ── */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1904,18 +1905,18 @@
         <hr class="request-divider">
         <p class="request-question">How do you plan your work?</p>
         <div class="request-options">
-          <label class="request-option"><input type="radio" name="plan-method" value="Paper planner"> Paper planner</label>
-          <label class="request-option"><input type="radio" name="plan-method" value="Digital apps"> Digital apps (Notion, Todoist)</label>
-          <label class="request-option"><input type="radio" name="plan-method" value="Mix of both"> Mix of both</label>
-          <label class="request-option"><input type="radio" name="plan-method" value="Nothing consistent"> Nothing consistent</label>
+          <label class="request-option"><input type="radio" name="plan" value="Paper planner"> Paper planner</label>
+          <label class="request-option"><input type="radio" name="plan" value="Digital apps"> Digital apps (Notion, Todoist)</label>
+          <label class="request-option"><input type="radio" name="plan" value="Mix of both"> Mix of both</label>
+          <label class="request-option"><input type="radio" name="plan" value="Nothing consistent"> Nothing consistent</label>
         </div>
         <hr class="request-divider">
         <p class="request-question">What slows you down the most?</p>
         <div class="request-options">
-          <label class="request-option"><input type="radio" name="frustration" value="Rewriting tasks"> Rewriting tasks across days</label>
-          <label class="request-option"><input type="radio" name="frustration" value="Too many steps"> Too many steps to organize one thing</label>
-          <label class="request-option"><input type="radio" name="frustration" value="Forgetting tasks"> Forgetting tasks that didn't get done</label>
-          <label class="request-option"><input type="radio" name="frustration" value="Too many apps"> Switching between tools to get work done</label>
+          <label class="request-option"><input type="radio" name="slow" value="Rewriting tasks"> Rewriting tasks across days</label>
+          <label class="request-option"><input type="radio" name="slow" value="Too many steps"> Too many steps to organize one thing</label>
+          <label class="request-option"><input type="radio" name="slow" value="Forgetting tasks"> Forgetting tasks that didn't get done</label>
+          <label class="request-option"><input type="radio" name="slow" value="Too many apps"> Switching between tools to get work done</label>
         </div>
         <button class="request-submit" id="request-submit-btn">Request access</button>
         <p class="request-fine-print">Limited access. We'll reach out.</p>
@@ -2161,6 +2162,20 @@
         email.focus();
         return;
       }
+
+      const planAnswer = document.querySelector('input[name="plan"]:checked');
+      const slowAnswer = document.querySelector('input[name="slow"]:checked');
+
+      const formData = new FormData();
+      formData.append('email', email.value);
+      if (planAnswer) formData.append('plan', planAnswer.value);
+      if (slowAnswer) formData.append('slow', slowAnswer.value);
+
+      fetch('https://getlaunchlist.com/s/e706GY', {
+        method: 'POST',
+        body: formData
+      });
+
       const body = document.getElementById('request-form-body');
       body.innerHTML = '<div class="request-confirmation"><div class="check-icon">\u2713</div><h3>You\'re on the list.</h3><p>We\'ll review and reach out.</p></div>';
     });
