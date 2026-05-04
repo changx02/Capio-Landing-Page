@@ -8,7 +8,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-  <script src="https://getlaunchlist.com/js/widget.js" defer></script>
   <style>
     /* ── RESET ── */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -2166,18 +2165,32 @@
       const planAnswer = document.querySelector('input[name="plan"]:checked');
       const slowAnswer = document.querySelector('input[name="slow"]:checked');
 
-      const formData = new FormData();
-      formData.append('email', email.value);
-      if (planAnswer) formData.append('plan', planAnswer.value);
-      if (slowAnswer) formData.append('slow', slowAnswer.value);
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = 'https://getlaunchlist.com/s/e706GY';
+      form.style.display = 'none';
 
-      fetch('https://getlaunchlist.com/s/e706GY', {
-        method: 'POST',
-        body: formData
-      });
+      const emailInput = document.createElement('input');
+      emailInput.name = 'email';
+      emailInput.value = email.value;
+      form.appendChild(emailInput);
 
-      const body = document.getElementById('request-form-body');
-      body.innerHTML = '<div class="request-confirmation"><div class="check-icon">\u2713</div><h3>You\'re on the list.</h3><p>We\'ll review and reach out.</p></div>';
+      if (planAnswer) {
+        const planInput = document.createElement('input');
+        planInput.name = 'plan';
+        planInput.value = planAnswer.value;
+        form.appendChild(planInput);
+      }
+
+      if (slowAnswer) {
+        const slowInput = document.createElement('input');
+        slowInput.name = 'slow';
+        slowInput.value = slowAnswer.value;
+        form.appendChild(slowInput);
+      }
+
+      document.body.appendChild(form);
+      form.submit();
     });
 
     function closeModal(overlay) {
