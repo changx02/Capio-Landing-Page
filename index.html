@@ -2210,7 +2210,7 @@
               <p style="font-weight:600; margin-bottom:0.75rem;">Refer your friends and move up the list</p>
               <div style="display:flex; align-items:center; gap:0.5rem; background:var(--bg-secondary); padding:0.75rem 1rem; border-radius:4px; margin-bottom:1rem;">
                 <span style="flex:1; font-size:0.8rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${referralLink}</span>
-                <button onclick="navigator.clipboard.writeText('${referralLink}')" style="background:var(--text-primary); color:var(--text-on-dark); border:none; padding:0.4rem 0.75rem; border-radius:4px; font-size:0.75rem; cursor:pointer;">Copy</button>
+                <button onclick="navigator.clipboard.writeText('${referralLink}').then(() => { this.textContent = 'Copied!'; this.style.background = '#4a4a4a'; setTimeout(() => { this.textContent = 'Copy'; this.style.background = 'var(--text-primary)'; }, 2000); })" style="background:var(--text-primary); color:var(--text-on-dark); border:none; padding:0.4rem 0.75rem; border-radius:4px; font-size:0.75rem; cursor:pointer;">Copy</button>
               </div>
               <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1rem;">
                 <a href="https://twitter.com/intent/tweet?text=I%20just%20joined%20the%20Capio%20waitlist%20%E2%80%94%20an%20intelligent%20planner%20for%20iPad.%20Join%20me%3A%20${encodeURIComponent(referralLink)}" target="_blank" style="flex:1; background:#000; color:#fff; text-align:center; padding:0.6rem; border-radius:4px; text-decoration:none; font-size:0.8rem; font-weight:500;">𝕏 Share</a>
