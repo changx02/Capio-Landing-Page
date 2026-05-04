@@ -1230,6 +1230,10 @@
     .request-submit:hover {
       opacity: 0.85;
     }
+    .request-submit-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
     .request-fine-print {
       font-size: var(--text-small);
       color: var(--text-muted);
@@ -2152,6 +2156,15 @@
           document.body.style.overflow = 'hidden';
         }
       });
+    });
+
+    const requestEmailInput = document.querySelector('.request-email-input');
+    const requestSubmitBtn = document.getElementById('request-submit-btn');
+
+    requestSubmitBtn.disabled = true;
+
+    requestEmailInput.addEventListener('input', () => {
+      requestSubmitBtn.disabled = !requestEmailInput.validity.valid || requestEmailInput.value.trim() === '';
     });
 
     // Request Access form submit
