@@ -2165,32 +2165,19 @@
       const planAnswer = document.querySelector('input[name="plan"]:checked');
       const slowAnswer = document.querySelector('input[name="slow"]:checked');
 
-      const form = document.createElement('form');
-      form.method = 'POST';
-      form.action = 'https://getlaunchlist.com/s/e706GY';
-      form.style.display = 'none';
+      const params = new URLSearchParams();
+      params.append('email', email.value);
+      if (planAnswer) params.append('plan', planAnswer.value);
+      if (slowAnswer) params.append('slow', slowAnswer.value);
 
-      const emailInput = document.createElement('input');
-      emailInput.name = 'email';
-      emailInput.value = email.value;
-      form.appendChild(emailInput);
+      fetch('https://getlaunchlist.com/s/e706GY', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString()
+      });
 
-      if (planAnswer) {
-        const planInput = document.createElement('input');
-        planInput.name = 'plan';
-        planInput.value = planAnswer.value;
-        form.appendChild(planInput);
-      }
-
-      if (slowAnswer) {
-        const slowInput = document.createElement('input');
-        slowInput.name = 'slow';
-        slowInput.value = slowAnswer.value;
-        form.appendChild(slowInput);
-      }
-
-      document.body.appendChild(form);
-      form.submit();
+      const body = document.getElementById('request-form-body');
+      body.innerHTML = '<div class="request-confirmation"><div class="check-icon">✓</div><h3>You\'re on the list.</h3><p>We\'ll review and reach out.</p></div>';
     });
 
     function closeModal(overlay) {
