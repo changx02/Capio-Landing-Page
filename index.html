@@ -2170,6 +2170,11 @@
       if (planAnswer) params.append('plan', planAnswer.value);
       if (slowAnswer) params.append('slow', slowAnswer.value);
 
+      // Get referral ID from URL if present
+      const urlParams = new URLSearchParams(window.location.search);
+      const refParam = urlParams.get('ref');
+      if (refParam) params.append('ref', refParam);
+
       const body = document.getElementById('request-form-body');
 
       try {
