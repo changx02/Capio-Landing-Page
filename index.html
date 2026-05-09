@@ -1184,7 +1184,8 @@
       background: var(--text-primary);
       border-radius: 50%;
     }
-    .request-email-input {
+    .request-email-input,
+    .request-name-input {
       width: 100%;
       padding: 0.75rem 1rem;
       border: 1px solid var(--border);
@@ -1194,12 +1195,23 @@
       font-size: var(--text-body);
       color: var(--text-primary);
     }
-    .request-email-input::placeholder {
+    .request-email-input::placeholder,
+    .request-name-input::placeholder {
       color: var(--text-muted);
     }
-    .request-email-input:focus {
+    .request-email-input:focus,
+    .request-name-input:focus {
       border-color: var(--text-primary);
       outline: none;
+    }
+    .request-error {
+      display: none;
+      color: #c0392b;
+      font-size: var(--text-small);
+      margin-top: 0.5rem;
+    }
+    .request-error.visible {
+      display: block;
     }
     .request-submit {
       width: 100%;
@@ -1920,6 +1932,10 @@
         <p class="request-heading">We're opening Capio to a small group<br>to shape it before launch.</p>
         <p class="request-sub">A few quick questions.</p>
         <hr class="request-divider">
+        <p class="request-question">First name</p>
+        <input type="text" class="request-name-input" placeholder="Your first name" maxlength="50" required>
+        <p class="request-error" id="request-name-error">Please enter your first name</p>
+        <hr class="request-divider">
         <p class="request-question">Email</p>
         <input type="email" class="request-email-input" placeholder="your@email.com" required>
         <hr class="request-divider">
@@ -2176,16 +2192,36 @@
     });
 
     const requestEmailInput = document.querySelector('.request-email-input');
+    const requestNameInput = document.querySelector('.request-name-input');
     const requestSubmitBtn = document.getElementById('request-submit-btn');
+    const requestNameError = document.getElementById('request-name-error');
+    function updateRequestSubmitState() {
+      if (!requestSubmitBtn) return;
+      const nameOk = requestNameInput && requestNameInput.value.trim() !== '';
+      const emailOk = requestEmailInput && requestEmailInput.value.includes('@') && requestEmailInput.value.trim() !== '';
+      requestSubmitBtn.disabled = !(nameOk && emailOk);
+    }
     if (requestEmailInput && requestSubmitBtn) {
-      requestEmailInput.addEventListener('input', () => {
-        requestSubmitBtn.disabled = !requestEmailInput.value.includes('@') || requestEmailInput.value.trim() === '';
+      requestEmailInput.addEventListener('input', updateRequestSubmitState);
+    }
+    if (requestNameInput && requestSubmitBtn) {
+      requestNameInput.addEventListener('input', () => {
+        if (requestNameError && requestNameInput.value.trim() !== '') {
+          requestNameError.classList.remove('visible');
+        }
+        updateRequestSubmitState();
       });
     }
 
     // Request Access form submit
     document.getElementById('request-submit-btn').addEventListener('click', async () => {
+      const name = document.querySelector('.request-name-input');
       const email = document.querySelector('.request-email-input');
+      if (!name.value.trim()) {
+        if (requestNameError) requestNameError.classList.add('visible');
+        name.focus();
+        return;
+      }
       if (!email.value || !email.validity.valid) {
         email.focus();
         return;
@@ -2195,6 +2231,7 @@
       const slowAnswer = document.querySelector('input[name="slow"]:checked');
 
       const params = new URLSearchParams();
+      params.append('first_name', name.value.trim());
       params.append('email', email.value);
       if (planAnswer) params.append('plan', planAnswer.value);
       if (slowAnswer) params.append('slow', slowAnswer.value);
