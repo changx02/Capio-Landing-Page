@@ -2232,6 +2232,7 @@
 
       const params = new URLSearchParams();
       params.append('first_name', name.value.trim());
+      params.append('FIRSTNAME', name.value.trim());
       params.append('email', email.value);
       if (planAnswer) params.append('plan', planAnswer.value);
       if (slowAnswer) params.append('slow', slowAnswer.value);
