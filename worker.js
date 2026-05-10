@@ -16,21 +16,26 @@ export default {
 
     const incoming = new URLSearchParams(await request.text());
 
-    // Forward the user's real IP and Cloudflare-derived geolocation as
-    // custom fields. Launchlist's built-in Location/IP columns will still
-    // reflect the Worker's egress, but these custom fields will be accurate.
+    // Forward the user's real IP, geolocation, and User-Agent so Launchlist
+    // can populate Browser/OS and so we have correct geo in custom fields.
+    // (Launchlist's built-in Location/IP columns still reflect Worker egress.)
     const cf = request.cf || {};
     const userIp = request.headers.get('cf-connecting-ip') || '';
+    const userAgent = request.headers.get('user-agent') || '';
     if (userIp) incoming.append('user_ip', userIp);
     if (cf.country) incoming.append('user_country', cf.country);
     if (cf.region) incoming.append('user_region', cf.region);
     if (cf.city) incoming.append('user_city', cf.city);
     if (cf.postalCode) incoming.append('user_postal', cf.postalCode);
     if (cf.timezone) incoming.append('user_timezone', cf.timezone);
+    if (userAgent) incoming.append('user_agent', userAgent);
 
     const response = await fetch('https://getlaunchlist.com/s/e706GY', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        ...(userAgent ? { 'User-Agent': userAgent } : {})
+      },
       body: incoming.toString(),
       redirect: 'follow'
     });
