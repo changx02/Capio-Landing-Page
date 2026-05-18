@@ -594,20 +594,27 @@
       border-radius: 8px;
       overflow: hidden;
     }
-    .feature-media.portrait {
-      aspect-ratio: 9 / 16;
-      width: auto;
-      max-width: 100%;
-      max-height: min(70vh, 600px);
-      margin-left: auto;
-      margin-right: auto;
-      background: transparent;
+    .feature-media .play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 64px;
+      height: 64px;
+      background: var(--text-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
     }
-    .feature-media.portrait video {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
+    .feature-media:hover .play-btn {
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+    .feature-media .play-btn svg {
+      width: 20px;
+      height: 20px;
+      margin-left: 2px;
     }
     .features-footnote {
       font-size: var(--text-small);
@@ -1700,10 +1707,10 @@
           <p class="feature-name">Projects</p>
           <p class="feature-desc">Write a hashtag (#) and a name.<br>Everything below becomes subtasks.<br><br>Projects stay separate from your day.<br>Circle any subtask to bring it in.</p>
         </div>
-        <div class="feature-media portrait" data-autoplay>
-          <video autoplay muted loop playsinline>
-            <source src="Assets/feature-project.mp4" type="video/mp4">
-          </video>
+        <div class="feature-media" data-autoplay role="img" aria-label="Projects feature GIF placeholder">
+          <div class="play-btn">
+            <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="#F5F0E8"/></svg>
+          </div>
         </div>
       </div>
 
