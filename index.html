@@ -594,6 +594,21 @@
       border-radius: 8px;
       overflow: hidden;
     }
+    .feature-media.portrait {
+      aspect-ratio: 9 / 16;
+      width: auto;
+      max-width: 100%;
+      max-height: min(70vh, 600px);
+      margin-left: auto;
+      margin-right: auto;
+      background: transparent;
+    }
+    .feature-media.portrait video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
     .features-footnote {
       font-size: var(--text-small);
       color: var(--text-muted);
@@ -1685,7 +1700,11 @@
           <p class="feature-name">Projects</p>
           <p class="feature-desc">Write a hashtag (#) and a name.<br>Everything below becomes subtasks.<br><br>Projects stay separate from your day.<br>Circle any subtask to bring it in.</p>
         </div>
-        <div class="feature-media" data-autoplay></div>
+        <div class="feature-media portrait" data-autoplay>
+          <video autoplay muted loop playsinline>
+            <source src="Assets/feature-project.mp4" type="video/mp4">
+          </video>
+        </div>
       </div>
 
       <!-- 2. Gestures — GIF left, text right -->
