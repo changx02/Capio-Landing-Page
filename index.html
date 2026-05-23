@@ -1963,7 +1963,8 @@
         <p class="request-error" id="request-name-error">Please enter your first name</p>
         <hr class="request-divider">
         <p class="request-question">Email</p>
-        <input type="email" class="request-email-input" placeholder="your@email.com" required>
+        <input type="email" class="request-email-input" placeholder="your@email.com" autocomplete="email" required>
+        <p class="request-error" id="request-email-error">Please enter a valid email address</p>
         <hr class="request-divider">
         <p class="request-question">How do you plan your work?</p>
         <div class="request-options">
@@ -2221,14 +2222,31 @@
     const requestNameInput = document.querySelector('.request-name-input');
     const requestSubmitBtn = document.getElementById('request-submit-btn');
     const requestNameError = document.getElementById('request-name-error');
+    const requestEmailError = document.getElementById('request-email-error');
+
+    // Stricter than the browser's built-in type=email check: requires a TLD with
+    // at least 2 chars, no whitespace, no leading/trailing dot, no consecutive dots.
+    const EMAIL_REGEX = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)*\.[A-Za-z]{2,}$/;
+    function isValidEmailFormat(value) {
+      const v = (value || '').trim();
+      if (v.length < 5 || v.length > 254) return false;
+      if (v.includes('..')) return false;
+      return EMAIL_REGEX.test(v);
+    }
+
     function updateRequestSubmitState() {
       if (!requestSubmitBtn) return;
       const nameOk = requestNameInput && requestNameInput.value.trim() !== '';
-      const emailOk = requestEmailInput && requestEmailInput.value.includes('@') && requestEmailInput.value.trim() !== '';
+      const emailOk = requestEmailInput && isValidEmailFormat(requestEmailInput.value);
       requestSubmitBtn.disabled = !(nameOk && emailOk);
     }
     if (requestEmailInput && requestSubmitBtn) {
-      requestEmailInput.addEventListener('input', updateRequestSubmitState);
+      requestEmailInput.addEventListener('input', () => {
+        if (requestEmailError && isValidEmailFormat(requestEmailInput.value)) {
+          requestEmailError.classList.remove('visible');
+        }
+        updateRequestSubmitState();
+      });
     }
     if (requestNameInput && requestSubmitBtn) {
       requestNameInput.addEventListener('input', () => {
@@ -2248,10 +2266,12 @@
         name.focus();
         return;
       }
-      if (!email.value || !email.validity.valid) {
+      if (!isValidEmailFormat(email.value)) {
+        if (requestEmailError) requestEmailError.classList.add('visible');
         email.focus();
         return;
       }
+      if (requestEmailError) requestEmailError.classList.remove('visible');
 
       const planAnswer = document.querySelector('input[name="plan"]:checked');
       const slowAnswer = document.querySelector('input[name="slow"]:checked');
@@ -2282,6 +2302,21 @@
 
         const data = await response.json();
         if (!data.success) {
+          const emailErrors = ['invalid_email', 'disposable_email', 'no_mx', 'blocked_domain'];
+          if (emailErrors.includes(data.error)) {
+            const messages = {
+              invalid_email: 'Please enter a valid email address.',
+              disposable_email: 'Please use a permanent email address (no disposable inboxes).',
+              no_mx: "That email domain doesn't appear to receive mail. Double-check the spelling?",
+              blocked_domain: 'That email domain is not accepted.'
+            };
+            if (requestEmailError) {
+              requestEmailError.textContent = messages[data.error];
+              requestEmailError.classList.add('visible');
+            }
+            email.focus();
+            return;
+          }
           throw new Error(data.error || 'signup_failed');
         }
         const referralCode = data.referralCode || '';
