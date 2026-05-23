@@ -2425,5 +2425,88 @@
     });
   </script>
 
+  <!-- First-party pageview + dwell tracking (writes to capio-waitlist D1).
+       Sends UPSERTs to /beacon so we can join engagement against signups. -->
+  <script>
+    (function () {
+      var BEACON_URL = 'https://capio-waitlist.capioplan.workers.dev/beacon';
+      var SID_KEY = '_capio_sid';
+      var UPDATE_INTERVAL_MS = 30000;
+
+      // Per-tab session id (resets when the browser session ends).
+      var sid;
+      try {
+        sid = sessionStorage.getItem(SID_KEY);
+        if (!sid) {
+          sid = (crypto && crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random());
+          sessionStorage.setItem(SID_KEY, sid);
+        }
+      } catch (e) {
+        sid = String(Date.now()) + Math.random();
+      }
+      var vid = (crypto && crypto.randomUUID ? crypto.randomUUID() : sid + '-' + Date.now());
+
+      var params = new URLSearchParams(location.search);
+      var payloadBase = {
+        viewId: vid,
+        sessionId: sid,
+        path: location.pathname + location.search,
+        referrer: document.referrer || '',
+        utm: {
+          source: params.get('utm_source') || '',
+          medium: params.get('utm_medium') || '',
+          campaign: params.get('utm_campaign') || ''
+        }
+      };
+
+      // Visible-time accounting: only count time the tab is actually foregrounded.
+      var accumulatedMs = 0;
+      var visibleSince = document.visibilityState === 'visible' ? Date.now() : null;
+
+      function dwellMs() {
+        return accumulatedMs + (visibleSince ? Date.now() - visibleSince : 0);
+      }
+
+      function send(useBeaconApi) {
+        var payload = Object.assign({}, payloadBase, { durationMs: dwellMs() });
+        var body = JSON.stringify(payload);
+        try {
+          if (useBeaconApi && navigator.sendBeacon) {
+            navigator.sendBeacon(BEACON_URL, new Blob([body], { type: 'application/json' }));
+            return;
+          }
+          fetch(BEACON_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: body,
+            keepalive: true,
+            credentials: 'omit'
+          }).catch(function () {});
+        } catch (e) { /* swallow — analytics must never break the page */ }
+      }
+
+      // Initial beacon so even instant-bouncers are counted.
+      send(false);
+
+      document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'hidden') {
+          if (visibleSince) {
+            accumulatedMs += Date.now() - visibleSince;
+            visibleSince = null;
+          }
+          send(true);
+        } else if (!visibleSince) {
+          visibleSince = Date.now();
+        }
+      });
+
+      // Periodic heartbeat in case the browser kills the tab without firing pagehide.
+      setInterval(function () { send(false); }, UPDATE_INTERVAL_MS);
+
+      // Final beacon on navigation away — pagehide is more reliable than unload.
+      window.addEventListener('pagehide', function () { send(true); });
+    })();
+  </script>
+
 </body>
 </html>
