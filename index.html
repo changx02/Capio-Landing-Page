@@ -2256,36 +2256,42 @@
       const planAnswer = document.querySelector('input[name="plan"]:checked');
       const slowAnswer = document.querySelector('input[name="slow"]:checked');
 
-      const params = new URLSearchParams();
-      params.append('name', name.value.trim());
-      params.append('first_name', name.value.trim());
-      params.append('FIRSTNAME', name.value.trim());
-      params.append('email', email.value);
-      if (planAnswer) params.append('plan', planAnswer.value);
-      if (slowAnswer) params.append('slow', slowAnswer.value);
-
-      // Get referral ID from URL if present
+      // Capture ref + UTM params from the URL
       const urlParams = new URLSearchParams(window.location.search);
-      const refParam = urlParams.get('ref');
-      if (refParam) params.append('ref', refParam);
+
+      const payload = {
+        email:       email.value.trim(),
+        name:        name.value.trim(),
+        ref:         urlParams.get('ref') || '',
+        utmSource:   urlParams.get('utm_source') || '',
+        utmMedium:   urlParams.get('utm_medium') || '',
+        utmCampaign: urlParams.get('utm_campaign') || '',
+        // survey extras (Worker tolerates extra fields; D1 columns for these are a follow-up)
+        plan: planAnswer ? planAnswer.value : '',
+        slow: slowAnswer ? slowAnswer.value : ''
+      };
 
       const body = document.getElementById('request-form-body');
 
       try {
-        const response = await fetch('https://capio-referral.capioplan.workers.dev', {
+        const response = await fetch('https://capio-waitlist.capioplan.workers.dev/signup', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: params.toString()
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
         });
 
         const data = await response.json();
-        const refId = data.refId || '';
-        const referralLink = refId ? `https://capioplan.com/?ref=${refId}` : 'https://capioplan.com';
+        if (!data.success) {
+          throw new Error(data.error || 'signup_failed');
+        }
+        const referralCode = data.referralCode || '';
+        const referralLink = data.referralLink || (referralCode ? `https://capioplan.com/?ref=${referralCode}` : 'https://capioplan.com');
+        const headline = data.existing ? "YOU'RE ALREADY ON THE LIST." : "YOU'RE ON THE LIST.";
 
         body.innerHTML = `
           <div class="request-confirmation">
             <div class="check-icon">✓</div>
-            <h3>YOU'RE ON THE LIST.</h3>
+            <h3>${headline}</h3>
             <p>We'll review and reach out.</p>
             <div style="margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid var(--border-light);">
               <p style="font-weight:600; margin-bottom:0.75rem;">Refer your friends and move up the list</p>
