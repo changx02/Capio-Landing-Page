@@ -2479,7 +2479,17 @@
 
         body.appendChild(confirmation);
       } catch (err) {
-        body.innerHTML = '<div class="request-confirmation"><div class="check-icon">✓</div><h3>YOU\'RE ON THE LIST.</h3><p>We\'ll review and reach out.</p></div>';
+        // Surface the failure honestly. Previously this catch swallowed every
+        // error (network, 4xx, 5xx, JSON parse) and rendered a fake "you're on
+        // the list" success modal, hiding broken signups from real users.
+        if (window.turnstile && turnstileWidgetId !== null) {
+          window.turnstile.reset(turnstileWidgetId);
+          turnstileToken = '';
+        }
+        if (requestEmailError) {
+          requestEmailError.textContent = "Something went wrong on our side. Please try again — if it keeps failing, email vee@capioplan.com.";
+          requestEmailError.classList.add('visible');
+        }
       }
     });
 
