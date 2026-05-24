@@ -1549,6 +1549,7 @@
     window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
     plausible.init()
   </script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 
@@ -2036,6 +2037,7 @@
           <label class="request-option"><input type="radio" name="slow" value="Forgetting tasks"> Forgetting tasks that didn't get done</label>
           <label class="request-option"><input type="radio" name="slow" value="Too many apps"> Switching between tools to get work done</label>
         </div>
+        <div id="turnstile-container" style="margin: 1rem 0;"></div>
         <button class="request-submit" id="request-submit-btn" disabled>Request access</button>
         <p class="request-fine-print">Limited access. We'll reach out.</p>
       </div>
@@ -2279,6 +2281,36 @@
     const requestNameError = document.getElementById('request-name-error');
     const requestEmailError = document.getElementById('request-email-error');
 
+    // Cloudflare Turnstile — invisible-by-default bot check. Site key is public
+    // (the secret lives in the capio-waitlist Worker as TURNSTILE_SECRET).
+    const TURNSTILE_SITE_KEY = '0x4AAAAAADVdjivmF8mRH1rT';
+    let turnstileToken = '';
+    let turnstileWidgetId = null;
+    function renderTurnstile() {
+      if (turnstileWidgetId !== null || !window.turnstile) return;
+      turnstileWidgetId = window.turnstile.render('#turnstile-container', {
+        sitekey: TURNSTILE_SITE_KEY,
+        theme: 'dark',
+        appearance: 'interaction-only',
+        callback: function (token) { turnstileToken = token; },
+        'error-callback': function () { turnstileToken = ''; },
+        'expired-callback': function () { turnstileToken = ''; },
+      });
+    }
+    // Render lazily when the request modal opens (Turnstile script loads async,
+    // and the widget element isn't visible until then).
+    document.querySelectorAll('[data-modal="request-modal"]').forEach((link) => {
+      link.addEventListener('click', function () {
+        // Poll briefly for the Turnstile script to finish loading.
+        const start = Date.now();
+        const tick = function () {
+          if (window.turnstile) { renderTurnstile(); return; }
+          if (Date.now() - start < 5000) setTimeout(tick, 100);
+        };
+        tick();
+      });
+    });
+
     // Stricter than the browser's built-in type=email check: requires a TLD with
     // at least 2 chars, no whitespace, no leading/trailing dot, no consecutive dots.
     const EMAIL_REGEX = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)*\.[A-Za-z]{2,}$/;
@@ -2343,7 +2375,8 @@
         utmCampaign: urlParams.get('utm_campaign') || '',
         // survey extras (Worker tolerates extra fields; D1 columns for these are a follow-up)
         plan: planAnswer ? planAnswer.value : '',
-        slow: slowAnswer ? slowAnswer.value : ''
+        slow: slowAnswer ? slowAnswer.value : '',
+        turnstileToken: turnstileToken,
       };
 
       const body = document.getElementById('request-form-body');
@@ -2357,6 +2390,18 @@
 
         const data = await response.json();
         if (!data.success) {
+          // Turnstile tokens are single-use — always reset so the user can retry.
+          if (window.turnstile && turnstileWidgetId !== null) {
+            window.turnstile.reset(turnstileWidgetId);
+            turnstileToken = '';
+          }
+          if (data.error === 'bot_check_failed') {
+            if (requestEmailError) {
+              requestEmailError.textContent = "Couldn't verify you're human — please try again.";
+              requestEmailError.classList.add('visible');
+            }
+            return;
+          }
           const emailErrors = ['invalid_email', 'disposable_email', 'no_mx', 'blocked_domain'];
           if (emailErrors.includes(data.error)) {
             const messages = {
