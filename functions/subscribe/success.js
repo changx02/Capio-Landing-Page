@@ -23,7 +23,8 @@
 
 import { page, htmlResponse } from "../_brand.js";
 
-const TIER_BYTE = { pro: 1, "pro-plus": 2 };
+// Single paid plan — byte 2 (the iOS verifier maps any valid tier byte to it).
+const TIER_BYTE = { capio: 2, pro: 2, "pro-plus": 2 };
 
 function hexToBytes(hex) {
   const out = new Uint8Array(hex.length / 2);
@@ -99,7 +100,7 @@ export async function onRequestGet(context) {
   const paid = session.payment_status === "paid" || session.status === "complete";
   if (!r.ok || !paid) return genericSuccess(origin);
 
-  const plan = session.metadata?.plan || "pro-plus";
+  const plan = session.metadata?.plan || "capio";
   // Default to 32 days out if the period end isn't available yet.
   const expiry = session.subscription?.current_period_end
     || Math.floor(Date.now() / 1000) + 32 * 86400;

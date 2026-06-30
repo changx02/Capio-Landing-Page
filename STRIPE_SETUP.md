@@ -13,30 +13,27 @@ routing). The static `index.html` and the existing `capio-referral` waitlist Wor
 | `/subscribe/cancel`    | `functions/subscribe/cancel.js`   | Friendly "no charge" page. |
 | `/terms`, `/privacy`   | `terms.html`, `privacy.html`      | Static legal pages the iOS paywall links to. |
 
-The app builds the subscribe URL as `https://capioplan.com/subscribe?plan=<pro|pro-plus>&billing=<annual|monthly>`.
+The app builds the subscribe URL as `https://capioplan.com/subscribe?plan=capio&billing=<annual|monthly>`
+(legacy `plan=pro` / `pro-plus` links are folded into `capio`).
 
-## Stripe products to create
+## Stripe product to create
 
-One Product family with four recurring Prices (subscription mode):
+One "Capio" Product with two recurring Prices (subscription mode):
 
 | Plan | Billing | Price | Map to env var |
 |------|---------|-------|----------------|
-| Pro | annual  | $34.99/yr | `STRIPE_PRICE_PRO_ANNUAL` |
-| Pro | monthly | $3.99/mo  | `STRIPE_PRICE_PRO_MONTHLY` |
-| Pro+ | annual | $54.99/yr | `STRIPE_PRICE_PROPLUS_ANNUAL` |
-| Pro+ | monthly | $6.99/mo | `STRIPE_PRICE_PROPLUS_MONTHLY` |
+| Capio | annual  | $119.99/yr | `STRIPE_PRICE_CAPIO_ANNUAL` |
+| Capio | monthly | $14.99/mo  | `STRIPE_PRICE_CAPIO_MONTHLY` |
 
 ## Environment variables (Cloudflare Pages → Settings → Environment variables)
 
 Set as **production** (and preview, if you test there). Secrets should be marked encrypted.
 
 ```
-STRIPE_SECRET_KEY              = sk_live_… (or sk_test_… while testing)   [secret]
-STRIPE_PRICE_PRO_ANNUAL        = price_…
-STRIPE_PRICE_PRO_MONTHLY       = price_…
-STRIPE_PRICE_PROPLUS_ANNUAL    = price_…
-STRIPE_PRICE_PROPLUS_MONTHLY   = price_…
-CAPIO_SIGNING_KEY              = base64 of the 32-byte Ed25519 PRIVATE seed [secret]
+STRIPE_SECRET_KEY            = sk_live_… (or sk_test_… while testing)   [secret]
+STRIPE_PRICE_CAPIO_ANNUAL    = price_…
+STRIPE_PRICE_CAPIO_MONTHLY   = price_…
+CAPIO_SIGNING_KEY            = base64 of the 32-byte Ed25519 PRIVATE seed [secret]
 ```
 
 Until `STRIPE_SECRET_KEY` + the price IDs are set, `/subscribe` returns a graceful

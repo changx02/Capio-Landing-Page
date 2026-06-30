@@ -30,7 +30,9 @@ export async function onRequestGet(context) {
   const { request, env } = context;
   const url = new URL(request.url);
   const origin = url.origin;
-  const plan = (url.searchParams.get("plan") || "").toLowerCase();
+  let plan = (url.searchParams.get("plan") || "").toLowerCase();
+  // Single plan now — fold any legacy tier names into "capio".
+  if (plan === "pro" || plan === "pro-plus") plan = "capio";
   const billing = (url.searchParams.get("billing") || "").toLowerCase();
   const key = `${plan}|${billing}`;
 

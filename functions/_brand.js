@@ -51,17 +51,13 @@ export function htmlResponse(html, status = 200) {
   return new Response(html, { status, headers: { "content-type": "text/html; charset=utf-8" } });
 }
 
-// (plan, billing) -> the env var holding that Stripe Price ID.
+// Single "Capio" plan. (plan, billing) -> the env var holding that Stripe Price ID.
 export const PRICE_ENV = {
-  "pro|annual": "STRIPE_PRICE_PRO_ANNUAL",
-  "pro|monthly": "STRIPE_PRICE_PRO_MONTHLY",
-  "pro-plus|annual": "STRIPE_PRICE_PROPLUS_ANNUAL",
-  "pro-plus|monthly": "STRIPE_PRICE_PROPLUS_MONTHLY",
+  "capio|annual": "STRIPE_PRICE_CAPIO_ANNUAL",
+  "capio|monthly": "STRIPE_PRICE_CAPIO_MONTHLY",
 };
 
 export const PLAN_LABEL = {
-  "pro|annual": ["Pro", "$34.99 / year"],
-  "pro|monthly": ["Pro", "$3.99 / month"],
-  "pro-plus|annual": ["Pro+", "$54.99 / year"],
-  "pro-plus|monthly": ["Pro+", "$6.99 / month"],
+  "capio|annual": ["Capio", "$119.99 / year"],
+  "capio|monthly": ["Capio", "$14.99 / month"],
 };
