@@ -11,6 +11,7 @@ routing). The static `index.html` and the existing `capio-referral` waitlist Wor
 | `/subscribe`           | `functions/subscribe.js`          | The app's paywall opens `?plan=&billing=`; creates a Stripe Checkout Session and redirects. Invalid params show a plan picker. |
 | `/subscribe/success`   | `functions/subscribe/success.js`  | Confirms payment; hands the entitlement back to the app via a signed `capio://redeem?token=` deep link. |
 | `/subscribe/cancel`    | `functions/subscribe/cancel.js`   | Friendly "no charge" page. |
+| `/api/refresh`         | `functions/api/refresh.js`        | Renewal: app POSTs `{serial}`; checks Stripe; re-mints a fresh token if the subscription is still active. |
 | `/terms`, `/privacy`   | `terms.html`, `privacy.html`      | Static legal pages the iOS paywall links to. |
 
 The app builds the subscribe URL as `https://capioplan.com/subscribe?plan=capio&billing=<annual|monthly>`
@@ -43,6 +44,25 @@ Until `STRIPE_SECRET_KEY` + the price IDs are set, `/subscribe` returns a gracef
 (`Capio/Services/LifetimeCode.swift`) and the redeem worker. Generate it with the iOS repo's
 `tools/generate-lifetime-code.swift keygen`. Without it, `/subscribe/success` shows a generic
 success page (no deep-link token).
+
+## Renewal — the `SUBS` KV namespace (enables `/api/refresh`)
+
+Subscription tokens expire at the billing-period end. To renew seamlessly without accounts, the app
+POSTs its token `serial` to `/api/refresh`, which looks up the Stripe subscription recorded for that
+serial and re-mints a fresh token if it's still active. This needs a KV namespace bound as `SUBS`:
+
+1. Create the namespace (needs a token with **Workers KV Storage: Edit**, or do it in the dashboard):
+   ```bash
+   npx wrangler kv namespace create SUBS
+   ```
+2. **Bind it to the Pages project**: capio-landing-page → Settings → Functions → **KV namespace
+   bindings** → add variable name `SUBS` → select the namespace (for Production, and Preview if used).
+3. Redeploy.
+
+Until `SUBS` is bound, `/subscribe/success` skips recording the mapping and `/api/refresh` returns
+`{ok:false, reason:"not_configured"}` (503) — safe; first-time checkout still works, only renewal is
+inactive. The serial is a bearer identifier (no PII); a leaked serial only lets someone refresh that
+one subscription's token while it stays paid.
 
 ## App handback — the signed deep-link token (needs a paired iOS change)
 
