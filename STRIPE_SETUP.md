@@ -12,6 +12,7 @@ routing). The static `index.html` and the existing `capio-referral` waitlist Wor
 | `/subscribe/success`   | `functions/subscribe/success.js`  | Confirms payment; hands the entitlement back to the app via a signed `capio://redeem?token=` deep link. |
 | `/subscribe/cancel`    | `functions/subscribe/cancel.js`   | Friendly "no charge" page. |
 | `/api/refresh`         | `functions/api/refresh.js`        | Renewal: app POSTs `{serial}`; checks Stripe; re-mints a fresh token if the subscription is still active. |
+| `/api/trial`           | `functions/api/trial.js`          | One trial per Apple ID: app POSTs `{identityToken}`; verifies the Apple JWT and returns a per-Apple-ID trial start (stored in `TRIALS` KV as `hash→date`, no PII). |
 | `/terms`, `/privacy`   | `terms.html`, `privacy.html`      | Static legal pages the iOS paywall links to. |
 
 The app builds the subscribe URL as `https://capioplan.com/subscribe?plan=capio&billing=<annual|monthly>`
@@ -63,6 +64,22 @@ Until `SUBS` is bound, `/subscribe/success` skips recording the mapping and `/ap
 `{ok:false, reason:"not_configured"}` (503) — safe; first-time checkout still works, only renewal is
 inactive. The serial is a bearer identifier (no PII); a leaked serial only lets someone refresh that
 one subscription's token while it stays paid.
+
+## Trial ledger — the `TRIALS` KV namespace (enables `/api/trial`)
+
+One 14-day trial per Apple ID. The app POSTs its Sign in with Apple `identityToken`; `/api/trial`
+verifies the JWT against Apple's public keys (`https://appleid.apple.com/auth/keys`) and returns a
+per-Apple-ID trial start, get-or-created in KV. Stored value is `SHA-256(appleUserId) → start-epoch`
+only — **no email or name**. Reinstalling / clearing iCloud / switching devices can't reset it.
+
+Same setup as `SUBS`:
+1. `npx wrangler kv namespace create TRIALS` (needs Workers KV Storage: Edit, or dashboard).
+2. Bind it: capio-landing-page → Settings → Functions → KV namespace bindings → var `TRIALS`.
+3. Redeploy.
+
+No secret is needed (Apple's JWKS is public). Until `TRIALS` is bound, `/api/trial` returns
+`{ok:false, reason:"not_configured"}` (503). The accepted `aud` values are `com.capioplan.capio`
+and `com.capioplan.capio.dev` (edit `ALLOWED_AUD` in `functions/api/trial.js` if the bundle id changes).
 
 ## App handback — the signed deep-link token (needs a paired iOS change)
 
