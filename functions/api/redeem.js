@@ -8,9 +8,9 @@
 //      embedded key). Rotate both the app key and this key at launch — see the
 //      iOS repo's tools/KEY_ROTATION.md.
 
-// TEST public key — matches the app's LifetimeCode.swift. Set CAPIO_PUBLIC_KEY
-// to override (and rotate for production).
-const PUBLIC_KEY_DEFAULT = "9V8dA1XrPWbPzPKcgTjfSjg5pUM5JjmBixy42u0swXM=";
+// Production public key — matches the app's LifetimeCode.swift. Set
+// CAPIO_PUBLIC_KEY to override.
+const PUBLIC_KEY_DEFAULT = "T2nGB8SSJQQkKyEe2mHH6Cr18WGmRmsAZw0A7ap5YbM=";
 const V1_LEN = 10 + 64; // [0x01][tier:1][serial:8] ‖ sig:64
 
 function json(body, status = 200) {
